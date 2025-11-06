@@ -1,26 +1,148 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
+/* Dark elegant theme defaults — make dark the default */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Palette */
+  --background: #222831;           /* charcoal */
+  --surface: #393E46;              /* deep slate */
+  --accent: #948979;               /* warm taupe */
+  --brand: #DFD0B8;                /* light sand */
+
+  /* Core tokens */
+  --foreground: #DFD0B8;
+  --radius: 0.625rem;
+  --card: #393E46;
+  --card-foreground: #DFD0B8;
+  --popover: #393E46;
+  --popover-foreground: #DFD0B8;
+  --primary: #DFD0B8;
+  --primary-foreground: #222831;
+  --secondary: #393E46;
+  --secondary-foreground: #DFD0B8;
+  --muted: #948979;
+  --muted-foreground: #948979;
+  --accent-foreground: #222831;
+  --destructive: #948979;          /* placeholder */
+  --border: #393E46;
+  --input: #393E46;
+  --ring: #948979;
+
+  /* Charts (kept, can be remapped later) */
+  --chart-1: #DFD0B8;
+  --chart-2: #948979;
+  --chart-3: #393E46;
+  --chart-4: #222831;
+  --chart-5: #948979;
+
+  /* Sidebar */
+  --sidebar: #222831;
+  --sidebar-foreground: #DFD0B8;
+  --sidebar-primary: #DFD0B8;
+  --sidebar-primary-foreground: #222831;
+  --sidebar-accent: #948979;
+  --sidebar-accent-foreground: #222831;
+  --sidebar-border: #393E46;
+  --sidebar-ring: #948979;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-brand: var(--brand);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-playfair);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Base styles */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-feature-settings: "ss01" on, "ss02" on, "ss03" on;
 }
+
+/* Selection */
+::selection { background: rgba(148,137,121,0.35); color: #000; }
+
+/* Containers */
+.container { max-width: 1200px; margin-inline: auto; padding-inline: 1rem; }
+
+/* Typography utilities */
+.heading {
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  letter-spacing: -0.02em;
+}
+.subtle { color: var(--muted); }
+
+/* Accent underline */
+.underline-accent { background-image: linear-gradient(90deg, var(--brand), var(--accent)); background-size: 100% 2px; background-repeat: no-repeat; background-position: 0 100%; }
+
+/* Animated gradient text */
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+.text-shimmer {
+  background-image: linear-gradient(90deg, var(--brand), var(--accent), var(--brand));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Soft glowing text utility for elegant headings */
+.text-glow-soft {
+  text-shadow:
+    0 0 6px rgba(223, 208, 184, 0.35),
+    0 0 12px rgba(148, 137, 121, 0.25),
+    0 0 24px rgba(223, 208, 184, 0.25);
+}
+
+/* Background pan effect for gradient text (hover) */
+.bg-pan {
+  background-size: 200% 100% !important;
+  transition: background-position 0.6s ease;
+}
+.bg-pan:hover {
+  background-position: 100% 0;
+}
+
+/* Removed .dark override: dark is default now */
+
+/* Removed global @layer base previously added by shadcn */

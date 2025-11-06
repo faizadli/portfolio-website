@@ -1,65 +1,133 @@
-import Image from "next/image";
+"use client";
+import Reveal from "@/components/Reveal";
+import TextSplit from "@/components/TextSplit";
+import ExpandableShowcase, { ShowcaseItem } from "@/components/ExpandableShowcase";
+import { projectsData } from "@/data/projects";
+import ThreeDSlider from "@/components/ThreeDSlider";
+import dynamic from "next/dynamic";
+
+// Dynamic import untuk Lanyard agar tidak di-render di server-side
+const Lanyard = dynamic(() => import("@/components/Lanyard"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <section className="container">
+      <div className="grid gap-10 md:grid-cols-2 md:items-center">
+        <div>
+          <Reveal y={32}>
+            <TextSplit
+              as="h1"
+              text="Hi, I'm Faiz."
+              className="heading text-5xl md:text-6xl text-foreground"
+              variant="flipIn"
+              mode="words"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          </Reveal>
+          <Reveal y={24} delay={0.15}>
+            <p className="mt-6 text-lg leading-relaxed text-foreground/80">
+              Frontend Developer fokus pada pengalaman pengguna, desain elegan, dan animasi halus.
+              Portfolio ini dibangun dengan Next.js, TypeScript, Tailwind, dan GSAP.
+            </p>
+          </Reveal>
+          <Reveal y={20} delay={0.3}>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="/projects"
+                className="px-5 py-2.5 rounded-full bg-brand/90 text-black hover:bg-brand transition-colors"
+              >
+                Lihat Projects
+              </a>
+              <a
+                href="/contact"
+                className="px-5 py-2.5 rounded-full border border-white/10 hover:border-white/20 text-foreground"
+              >
+                Hubungi Saya
+              </a>
+            </div>
+          </Reveal>
         </div>
-      </main>
-    </div>
+        {/* Lanyard - fixed height container */}
+        <div className="relative w-full h-[500px] md:h-[600px]">
+          <Lanyard position={[0, 0, 20]} gravity={[0, -40, 0]} fov={25} transparent={true} />
+        </div>
+      </div>
+
+      {/* Projects (Showcase Slider) */}
+      <Reveal y={28}>
+        <TextSplit
+          as="h2"
+          text="Projects"
+          className="heading mt-16 text-3xl text-center"
+          variant="flipIn"
+          mode="words"
+        />
+      </Reveal>
+      <Reveal y={24} delay={0.1}>
+        <div className="mt-2">
+          <ExpandableShowcase
+            items={projectsData.slice(0, 4) as ShowcaseItem[]}
+            viewAllHref="/projects"
+            viewAllLabel="View All"
+          />
+        </div>
+      </Reveal>
+
+      {/* Certificates */}
+      <Reveal y={28}>
+        <h2 className="heading mt-16 text-3xl text-center">Certificates</h2>
+      </Reveal>
+      <Reveal y={24} delay={0.1}>
+        <div className="mt-2">
+          {(() => {
+            const certificates = [
+              {
+                name: "Front-End Developer",
+                issuer: "Dicoding",
+                year: 2023,
+                image: "https://placehold.co/600x400/png?text=Front-End+Developer",
+                link: "#",
+              },
+              {
+                name: "React Advanced",
+                issuer: "Udemy",
+                year: 2024,
+                image: "https://placehold.co/600x400/png?text=React+Advanced",
+                link: "#",
+              },
+              {
+                name: "Web Accessibility",
+                issuer: "Coursera",
+                year: 2024,
+                image: "https://placehold.co/600x400/png?text=Web+Accessibility",
+                link: "#",
+              },
+              {
+                name: "UI Design Basics",
+                issuer: "Coursera",
+                year: 2023,
+                image: "https://placehold.co/600x400/png?text=UI+Design+Basics",
+                link: "#",
+              },
+              {
+                name: "Performance Optimization",
+                issuer: "Udacity",
+                year: 2024,
+                image: "https://placehold.co/600x400/png?text=Performance+Optimization",
+                link: "#",
+              },
+            ];
+            return (
+              <ThreeDSlider
+                items={certificates}
+                viewAllHref="/certificate"
+                viewAllLabel="View All"
+              />
+            );
+          })()}
+        </div>
+      </Reveal>
+    </section>
   );
 }
