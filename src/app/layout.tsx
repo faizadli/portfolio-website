@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Inter, Playfair_Display, Roboto_Flex } from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -16,6 +16,12 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+const robotoFlex = Roboto_Flex({
+  variable: "--font-roboto-flex",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Portfolio | Dark Elegance",
   description: "Personal portfolio with elegant dark theme and GSAP animations",
@@ -28,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} antialiased bg-background text-foreground`}>
+      <body className={`${inter.variable} ${playfair.variable} ${robotoFlex.variable} antialiased bg-background text-foreground`}>
         <div className="min-h-dvh flex flex-col">
           <NavBar />
           <main className="flex-1">

@@ -5,6 +5,8 @@ import ExpandableShowcase, { ShowcaseItem } from "@/components/ExpandableShowcas
 import { projectsData } from "@/data/projects";
 import ThreeDSlider from "@/components/ThreeDSlider";
 import dynamic from "next/dynamic";
+import { useRef } from "react";
+import VariableProximity from "@/components/VariableProximity";
 
 // Dynamic import untuk Lanyard agar tidak di-render di server-side
 const Lanyard = dynamic(() => import("@/components/Lanyard"), {
@@ -12,19 +14,25 @@ const Lanyard = dynamic(() => import("@/components/Lanyard"), {
 });
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
   return (
     <section className="container">
       <div className="grid gap-10 md:grid-cols-2 md:items-center">
         <div>
-          <Reveal y={32}>
-            <TextSplit
-              as="h1"
-              text="Hi, I'm Faiz."
-              className="heading text-5xl md:text-6xl text-foreground"
-              variant="flipIn"
-              mode="words"
+          <div ref={containerRef} style={{ position: 'relative', display: 'inline-block' }}>
+            <Reveal y={32}>
+              <VariableProximity
+              label="Hi, I'm Faiz."
+              className="heading text-5xl md:text-6xl text-foreground cursor-pointer"
+              fromFontVariationSettings="'wght' 300, 'opsz' 12"
+              toFontVariationSettings="'wght' 900, 'opsz' 48"
+              containerRef={containerRef}
+              radius={200}
+              falloff="exponential"
             />
-          </Reveal>
+            </Reveal>
+          </div>
           <Reveal y={24} delay={0.15}>
             <p className="mt-6 text-lg leading-relaxed text-foreground/80">
               Frontend Developer fokus pada pengalaman pengguna, desain elegan, dan animasi halus.
