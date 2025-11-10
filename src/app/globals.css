@@ -1,9 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "./staggered-menu.css";
 
 @custom-variant dark (&:is(.dark *));
 
-/* Dark elegant theme defaults — make dark the default */
+/* Dark elegant theme defaults – make dark the default */
 :root {
   /* Palette */
   --background: #222831;           /* charcoal */
@@ -143,6 +144,48 @@ body {
   background-position: 100% 0;
 }
 
-/* Removed .dark override: dark is default now */
+/* Logo marquee loop */
+.logo-loop {
+  --gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  padding-block: 0.5rem;
+  /* soft edge fading */
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+.logo-shelf { position: relative; width: 100%; height: 56px; }
+.logo-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap);
+  min-width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+}
+.track-a { animation: scroll-left 70s linear infinite; }
+.track-b { transform: translateX(calc(100% + var(--gap))); animation: scroll-left-2 70s linear infinite; }
+.logo-loop:hover .track-a, .logo-loop:hover .track-b { animation-play-state: paused; }
+.logo-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--card) 88%, black 12%);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+.logo-item .icon { color: var(--foreground); opacity: 0.9; }
 
-/* Removed global @layer base previously added by shadcn */
+@keyframes scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-100% - var(--gap))); }
+}
+@keyframes scroll-left-2 {
+  from { transform: translateX(calc(100% + var(--gap))); }
+  to { transform: translateX(0); }
+}

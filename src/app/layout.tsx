@@ -37,7 +37,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${playfair.variable} ${robotoFlex.variable} antialiased bg-background text-foreground`}>
         <div className="min-h-dvh flex flex-col">
           <NavBar />
-          <main className="flex-1">
+          <main className="flex-1 pt-20">
             {children}
           </main>
           <Footer />

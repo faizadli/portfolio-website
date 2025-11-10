@@ -84,7 +84,13 @@ export default function Home() {
 
       {/* Certificates */}
       <Reveal y={28}>
-        <h2 className="heading mt-16 text-3xl text-center">Certificates</h2>
+        <TextSplit
+          as="h2"
+          text="Certificates"
+          className="heading mt-16 text-3xl text-center"
+          variant="flipIn"
+          mode="words"
+        />
       </Reveal>
       <Reveal y={24} delay={0.1}>
         <div className="mt-2">

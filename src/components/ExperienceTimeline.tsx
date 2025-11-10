@@ -9,7 +9,7 @@ const timeline = [
   { icon: Star, role: "Open Source", org: "GitHub", period: "Jan 24", details: "Kontribusi pada library animasi dan komponen UI." },
 ];
 
-export default function ExperiencePage() {
+export default function ExperienceTimeline() {
   return (
     <section className="container py-16">
       <Reveal y={28}><TextSplit as="h2" text="Experience" className="heading text-4xl text-center" variant="wave" mode="words" /></Reveal>

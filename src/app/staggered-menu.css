@@ -1,0 +1,137 @@
+/* Staggered Menu Styles */
+.sm-scope .sm-panel-item:hover {
+  color: var(--sm-accent, #948979);
+}
+
+/* Make nav item fill row so numbering aligns on the right consistently */
+.sm-scope .sm-panel-item {
+  display: block;
+  width: 100%;
+}
+
+.sm-scope .sm-panel-list[data-numbering] {
+  counter-reset: smItem;
+}
+
+.sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after {
+  counter-increment: smItem;
+  content: counter(smItem, decimal-leading-zero);
+  position: absolute;
+  top: 0.1em;
+  right: 0.25em;
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--sm-accent, #948979);
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+  opacity: var(--sm-num-opacity, 0);
+}
+
+.sm-scope .sm-socials-list .sm-socials-link {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+.sm-scope .sm-socials-list:hover .sm-socials-link:not(:hover) {
+  opacity: 0.35;
+}
+
+.sm-scope .sm-socials-list:focus-within .sm-socials-link:not(:focus-visible) {
+  opacity: 0.35;
+}
+
+.sm-scope .sm-socials-list .sm-socials-link:hover,
+.sm-scope .sm-socials-list .sm-socials-link:focus-visible {
+  opacity: 1;
+}
+
+.sm-scope .sm-socials-link:hover {
+  color: var(--sm-accent, #948979);
+}
+
+.sm-scope .sm-socials-link:focus-visible {
+  outline: 2px solid var(--sm-accent, #948979);
+  outline-offset: 3px;
+}
+
+.sm-scope .sm-toggle:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.67);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* Base panel sizing and padding override (to ensure consistency across breakpoints) */
+.sm-scope .staggered-menu-panel {
+  width: min(560px, 100%);
+  padding: 6em 2em 2em 2em; /* override utility classes */
+}
+
+/* Header base padding override to allow responsive adjustments */
+.sm-scope .staggered-menu-header {
+  padding: 1rem 2rem; /* override utility classes */
+}
+
+@media (max-width: 1024px) {
+  .sm-scope .staggered-menu-panel {
+    width: 100%;
+    left: 0;
+    right: 0;
+    padding: 5em 1.5em 1.5em 1.5em;
+  }
+  
+  .sm-scope .staggered-menu-wrapper[data-open] .sm-logo-img {
+    filter: invert(100%);
+  }
+  
+  .sm-scope .sm-prelayers {
+    width: 100%;
+  }
+  
+  .sm-scope .staggered-menu-header {
+    padding: 0.9rem 1.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Smaller header spacing and safe-area support for mobile */
+  .sm-scope .staggered-menu-header {
+    padding: calc(0.75rem + env(safe-area-inset-top)) 1rem 0.75rem 1rem;
+  }
+  
+  .sm-scope .staggered-menu-panel {
+    padding: 4.75em 1rem 1rem 1rem;
+  }
+  
+  .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after {
+    right: 0.25em;
+    font-size: 14px;
+  }
+  
+  .sm-scope .sm-panel-item {
+    font-size: 3rem;
+    line-height: 1.05;
+  }
+  
+  .sm-scope .sm-panel-list {
+    gap: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .sm-scope .sm-panel-item {
+    font-size: 2.5rem;
+  }
+  .sm-scope .sm-panel-list {
+    gap: 1.25rem;
+  }
+  .sm-scope .sm-panel-list[data-numbering] .sm-panel-item::after {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 360px) {
+  .sm-scope .sm-panel-item {
+    font-size: 2.25rem;
+  }
+}
