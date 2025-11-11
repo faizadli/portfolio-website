@@ -2,6 +2,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import PixelTransition from "./PixelTransition";
+import Image from "next/image";
 
 export default function BioIntro() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,17 +33,22 @@ export default function BioIntro() {
         <div className="relative w-full max-w-[220px] aspect-square mx-auto sm:max-w-[200px] md:max-w-[220px]">
           <PixelTransition
             firstContent={
-              <img 
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop" 
-                alt="Profile"
-                className="w-full h-full object-cover rounded-xl border border-white/10 shadow-sm"
+              <Image
+                src="/assets/profile/profile-1.jpeg"
+                alt="Personal photo"
+                fill
+                sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, 220px"
+                className="object-cover rounded-xl border border-white/10 shadow-sm"
+                priority
               />
             }
             secondContent={
-              <img 
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=400&fit=crop" 
-                alt="Profile Alternative"
-                className="w-full h-full object-cover rounded-xl border border-white/10 shadow-sm"
+              <Image
+                src="/assets/profile/profile-2.jpeg"
+                alt="Personal photo alternative"
+                fill
+                sizes="(max-width: 640px) 180px, (max-width: 768px) 200px, 220px"
+                className="object-cover rounded-xl border border-white/10 shadow-sm"
               />
             }
             gridSize={12}
@@ -53,16 +59,10 @@ export default function BioIntro() {
           />
         </div>
         <div>
-          <h2 className="bio-title text-2xl md:text-3xl font-semibold">Halo, saya Mochamad Faiz Adli</h2>
+          <h2 className="bio-title text-2xl md:text-3xl font-semibold">Halo, I'm Mochammad Faiz Adli</h2>
           <p className="bio-subtitle mt-2 text-foreground/80">
-            Frontend engineer yang fokus pada UI interaktif, aksesibel, dan performa. Suka membangun
-            pengalaman yang halus dengan GSAP dan micro-interactions.
+            I am a Fullstack Developer with experience in building complete web applications from front-end to back-end. I am passionate about delivering scalable, efficient, and user-oriented solutions through continuous learning and collaboration.
           </p>
-          <ul className="bio-points mt-6 space-y-2 text-sm text-foreground/80">
-            <li>• Spesialis animasi UI/UX dan GSAP.</li>
-            <li>• Penggemar clean code dan design systems.</li>
-            <li>• Senang eksperimen dengan 3D dan motion.</li>
-          </ul>
         </div>
       </div>
     </section>

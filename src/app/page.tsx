@@ -35,8 +35,7 @@ export default function Home() {
           </div>
           <Reveal y={24} delay={0.15}>
             <p className="mt-6 text-lg leading-relaxed text-foreground/80">
-              Frontend Developer fokus pada pengalaman pengguna, desain elegan, dan animasi halus.
-              Portfolio ini dibangun dengan Next.js, TypeScript, Tailwind, dan GSAP.
+              I am a Fullstack Developer with experience in building complete web applications from front-end to back-end. I am passionate about delivering scalable, efficient, and user-oriented solutions through continuous learning and collaboration.
             </p>
           </Reveal>
           <Reveal y={20} delay={0.3}>
@@ -45,13 +44,13 @@ export default function Home() {
                 href="/projects"
                 className="px-5 py-2.5 rounded-full bg-brand/90 text-black hover:bg-brand transition-colors"
               >
-                Lihat Projects
+                View Projects
               </a>
               <a
                 href="/contact"
                 className="px-5 py-2.5 rounded-full border border-white/10 hover:border-white/20 text-foreground"
               >
-                Hubungi Saya
+                Contact Me
               </a>
             </div>
           </Reveal>

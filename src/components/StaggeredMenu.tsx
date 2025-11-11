@@ -49,6 +49,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
   onMenuClose
 }: StaggeredMenuProps) => {
   const [open, setOpen] = useState(false);
+  const [closing, setClosing] = useState(false);
   const openRef = useRef(false);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const preLayersRef = useRef<HTMLDivElement | null>(null);
@@ -227,6 +228,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
         if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
         busyRef.current = false;
+        setClosing(false);
       }
     });
   }, [position]);
@@ -303,9 +305,11 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     setOpen(target);
 
     if (target) {
+      setClosing(false);
       onMenuOpen?.();
       playOpen();
     } else {
+      setClosing(true);
       onMenuClose?.();
       playClose();
     }
@@ -330,6 +334,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
         className={(className ? className + ' ' : '') + 'staggered-menu-wrapper relative w-full h-full z-40'}
         data-position={position}
         data-open={open || undefined}
+        data-closing={closing || undefined}
       >
         <div
           ref={preLayersRef}
