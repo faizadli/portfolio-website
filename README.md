@@ -34,49 +34,32 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-## Database & Deploy ke Vercel (Gratis)
 
-Proyek ini mendukung penyimpanan data `projects` dan `certificates` memakai Postgres dengan integrasi Vercel Postgres (free tier) melalui paket `@vercel/postgres`.
+## Kirim Pesan (Email) Tanpa Database
 
-### Setup Database (Vercel Postgres)
-- Buka Dashboard Vercel → Project ini → Storage → Tambahkan Postgres.
-- Setelah terpasang, Vercel akan menyediakan environment variables seperti `POSTGRES_URL`, `POSTGRES_URL_NON_POOLING`, `POSTGRES_USER`, dll.
-- Di Settings → Environment Variables, pastikan variabel tersebut tersedia untuk `Production` dan `Preview`.
+Proyek ini tidak menggunakan backend database maupun API CRUD. Satu-satunya aksi sisi server adalah mengirim email dari halaman Contact menggunakan Server Actions Next.js.
 
-### Pengembangan Lokal
-- Buat file `.env.local` dan salin nilai `POSTGRES_URL` dari Vercel (atau pakai Postgres lokal/Neon):
+### Environment Variables
+
+- Buat file `.env.local` berisi:
 
 ```
-POSTGRES_URL="postgres://<user>:<password>@<host>:<port>/<database>"
+EMAIL_USER="alamat-email-gmail-anda"
+EMAIL_PASS="app password Gmail"
 ```
 
-- Jalankan dev server: `npm run dev`.
+Catatan:
 
-### Endpoint API
-- `GET /api/projects` → daftar semua projects
-- `POST /api/projects` → buat project baru (body JSON: `{ title, description?, url?, tags? }`)
-- `GET /api/projects/:id` → detail project
-- `PUT /api/projects/:id` → update project
-- `DELETE /api/projects/:id` → hapus project
+- `EMAIL_PASS` adalah App Password Gmail (bukan password biasa). Aktifkan 2FA di akun Gmail, lalu buat App Password dan salin nilainya ke sini.
+- Email tujuan default dikonfigurasi di aksi server, dan dapat diubah sesuai kebutuhan.
 
-- `GET /api/certificates` → daftar semua certificates
-- `POST /api/certificates` → buat certificate baru (body JSON: `{ name, issuer?, issued_at?, url?, skills? }`)
-- `GET /api/certificates/:id` → detail certificate
-- `PUT /api/certificates/:id` → update certificate
-- `DELETE /api/certificates/:id` → hapus certificate
+### Mengirim Pesan dari Halaman Contact
 
-Contoh uji cepat (menggunakan curl):
+- Form Contact pada `/contact` memanggil aksi server `sendEmailAction` yang berjalan di server, sehingga kredensial email tidak terekspos ke klien.
+- Tidak ada `API route` terpisah; file API `/api/send-email` telah dihapus karena Server Actions sudah cukup.
 
-```
-curl http://localhost:3000/api/projects
+### Deploy ke Vercel
 
-curl -X POST http://localhost:3000/api/projects \
-  -H "Content-Type: application/json" \
-  -d '{"title": "Portfolio Website", "url": "https://example.com", "tags": ["nextjs","ts"]}'
-```
-
-### Deploy ke Vercel (Gratis)
-- Push repository ini ke GitHub/GitLab.
-- Import ke Vercel → Link ke repo.
-- Pastikan Storage Postgres terpasang dan ENV otomatis terhubung.
-- Deploy. Free plan Vercel + Vercel Postgres (Neon) cukup untuk skenario CRUD ringan.
+- Import repo ke Vercel dan deploy.
+- Tambahkan `EMAIL_USER` dan `EMAIL_PASS` di Project Settings → Environment Variables untuk environment `Production` dan `Preview`.
+- Tidak perlu menyiapkan database karena proyek ini murni statis + aksi kirim email.
