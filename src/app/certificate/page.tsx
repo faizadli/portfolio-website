@@ -4,6 +4,7 @@ import TextSplit from "@/components/TextSplit";
 import Image from "next/image";
 import { Link } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 
 const certificates = [
   { name: "Front-End Developer", issuer: "Dicoding", year: 2023, image: "https://placehold.co/600x400/png?text=Front-End+Developer", link: "#" },
@@ -20,7 +21,7 @@ const certificates = [
   { name: "Performance Web", issuer: "Google", year: 2024, image: "https://placehold.co/600x400/png?text=Performance+Web", link: "#" },
 ];
 
-export default function CertificatePage() {
+function CertificateContent() {
   const PAGE_SIZE = 9;
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function CertificatePage() {
       <Reveal y={28}><TextSplit as="h2" text="Certificate" className="heading text-4xl" variant="riseGlow" mode="words" /></Reveal>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((c, i) => (
-          <Reveal key={c.name} y={24} delay={i * 0.08}>
+          <div key={c.name}>
             <div className="group rounded-xl border border-white/10 bg-background/40 overflow-hidden hover:border-white/20 transition-colors">
               <div className="relative h-36 w-full">
                 <Image src={c.image} alt={c.name} fill className="object-cover" unoptimized />
@@ -59,7 +60,7 @@ export default function CertificatePage() {
                 </div>
               </div>
             </div>
-          </Reveal>
+          </div>
         ))}
       </div>
       {/* Pagination Controls */}
@@ -100,5 +101,13 @@ export default function CertificatePage() {
         ))}
       </div>
     </section>
+  );
+}
+
+export default function CertificatePage() {
+  return (
+    <Suspense fallback={<section className="container mx-auto py-16"><p className="subtle">Loading certificates…</p></section>}>
+      <CertificateContent />
+    </Suspense>
   );
 }

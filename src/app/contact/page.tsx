@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Github, Linkedin, Instagram } from "lucide-react";
 import TruckButton from "@/components/TruckButton";
 import Toast from "@/components/Toast";
+import { sendEmailAction } from "@/lib/sendEmail";
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -36,25 +37,19 @@ export default function ContactPage() {
     }
 
     try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...form,
-          to: 'faizadli9912@gmail.com'
-        })
+      const result = await sendEmailAction({
+        ...form,
+        to: 'faizadli9912@gmail.com'
       });
 
-      const data = await response.json();
-
-      if (response.ok) {
+      if (result.ok) {
         setStatus({ type: "success", message: "Pesan berhasil dikirim!" });
         showToast("Pesan berhasil dikirim!", "success");
         setForm({ name: "", email: "", message: "" });
         setErrors({});
         return true;
       } else {
-        const errMsg = data.error || 'Gagal mengirim email';
+        const errMsg = result.error || 'Gagal mengirim email';
         showToast(errMsg, "error");
         throw new Error(errMsg);
       }

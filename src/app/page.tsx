@@ -2,7 +2,7 @@
 import Reveal from "@/components/Reveal";
 import TextSplit from "@/components/TextSplit";
 import ExpandableShowcase, { ShowcaseItem } from "@/components/ExpandableShowcase";
-import { projectsData } from "@/data/projects";
+import { projectsData } from "@/lib/projects";
 import ThreeDSlider from "@/components/ThreeDSlider";
 import dynamic from "next/dynamic";
 import { useRef } from "react";
@@ -17,7 +17,7 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   
   return (
-    <section className="container">
+    <section className="container pb-24 md:pb-32">
       <div className="grid gap-10 md:grid-cols-2 md:items-center">
         <div>
           <div ref={containerRef} style={{ position: 'relative', display: 'inline-block' }}>
@@ -139,6 +139,40 @@ export default function Home() {
               />
             );
           })()}
+        </div>
+      </Reveal>
+
+      {/* Contact CTA */}
+      <Reveal y={28}>
+        <TextSplit
+          as="h2"
+          text="Get In Touch"
+          className="heading mt-16 text-3xl text-center"
+          variant="flipIn"
+          mode="words"
+        />
+      </Reveal>
+      <Reveal y={24} delay={0.1}>
+        <div className="mt-6 mx-auto max-w-2xl text-center">
+          <p className="text-foreground/80">
+            Have a project in mind or want to collaborate? Let’s talk.
+          </p>
+          <div className="mt-7 flex flex-wrap justify-center gap-3">
+            <a
+              href="/contact"
+              aria-label="Go to Contact page"
+              className="px-5 py-2.5 rounded-full bg-brand/90 text-black hover:bg-brand transition-colors"
+            >
+              Contact Me
+            </a>
+            <a
+              href="/about"
+              aria-label="Learn more about me"
+              className="px-5 py-2.5 rounded-full border border-white/10 hover:border-white/20 text-foreground"
+            >
+              Learn More
+            </a>
+          </div>
         </div>
       </Reveal>
     </section>

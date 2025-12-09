@@ -98,7 +98,7 @@ export default function TruckButton({
     if (button.classList.contains("done")) {
       resetButton();
       onReset && onReset();
-      return;
+      // Lanjutkan proses kirim pada klik yang sama tanpa perlu klik kedua
     }
 
     // Start animation and perform submission

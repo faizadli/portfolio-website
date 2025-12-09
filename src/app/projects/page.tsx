@@ -3,12 +3,11 @@ import Reveal from "@/components/Reveal";
 import TextSplit from "@/components/TextSplit";
 import Image from "next/image";
 import { ExternalLink, Tags } from "lucide-react";
-import { projectsData } from "@/data/projects";
+import { projectsData } from "@/lib/projects";
 import { useSearchParams, useRouter } from "next/navigation";
+import { Suspense } from "react";
 
- 
-
-export default function ProjectsPage() {
+function ProjectsContent() {
   const PAGE_SIZE = 9;
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -102,5 +101,13 @@ export default function ProjectsPage() {
         ))}
       </div>
     </section>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <Suspense fallback={<section className="container py-16"><p className="subtle">Loading projects…</p></section>}>
+      <ProjectsContent />
+    </Suspense>
   );
 }
