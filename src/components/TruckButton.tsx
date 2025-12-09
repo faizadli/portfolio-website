@@ -12,8 +12,8 @@ interface TruckButtonProps {
 export default function TruckButton({
   onSubmit,
   onReset,
-  labelDefault = "Kirim Pesan",
-  labelSuccess = "Pesan Terkirim",
+  labelDefault = "Send Message",
+  labelSuccess = "Message Sent",
   className,
 }: TruckButtonProps) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);

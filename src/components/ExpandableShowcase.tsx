@@ -74,7 +74,7 @@ export default function ExpandableShowcase({
           {visibleItems.map((p, idx) => (
             <li
               key={p.title}
-              className="bg-background/50 relative overflow-hidden rounded-xl border border-white/10"
+              className="group bg-card border-border relative overflow-hidden rounded-xl border"
               style={{ width: cardWidth }}
               onClick={() => setExpanded(expanded === idx ? null : idx)}
             >
@@ -83,15 +83,28 @@ export default function ExpandableShowcase({
                   src={p.image}
                   alt={p.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                   unoptimized
                 />
+                <div className="bg-accent/20 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
               <div className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h4 className="text-base font-semibold">{p.title}</h4>
                     <p className="subtle mt-1 text-xs">{p.stack}</p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {p.stack.split(",").map((s, i) =>
+                        i < 2 ? (
+                          <span
+                            key={`${p.title}-stack-${i}`}
+                            className="bg-brand/15 border-brand/30 text-foreground rounded-full border px-2 py-0.5 text-[11px]"
+                          >
+                            {s.trim()}
+                          </span>
+                        ) : null,
+                      )}
+                    </div>
                   </div>
                   <ExternalLink className="size-4 opacity-75" />
                 </div>
@@ -103,7 +116,7 @@ export default function ExpandableShowcase({
                     {p.tags.map((t) => (
                       <span
                         key={t}
-                        className="bg-background/60 rounded-full border border-white/10 px-2 py-1 text-[11px]"
+                        className="bg-accent/15 border-accent/30 text-foreground rounded-full border px-2 py-1 text-[11px]"
                       >
                         {t}
                       </span>
@@ -117,14 +130,14 @@ export default function ExpandableShowcase({
         <div className="mt-4 flex items-center justify-center gap-4">
           <button
             onClick={rotatePrev}
-            className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+            className="border-accent/30 bg-accent/15 text-foreground hover:bg-accent/25 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
           >
             Prev
           </button>
           {viewAllHref && (
             <NextLink
               href={viewAllHref}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+              className="border-brand/30 bg-brand/15 text-foreground hover:bg-brand/25 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
               aria-label={viewAllLabel ?? "View All Projects"}
             >
               <LinkIcon className="size-3" /> {viewAllLabel ?? "View All"}
@@ -132,7 +145,7 @@ export default function ExpandableShowcase({
           )}
           <button
             onClick={rotateNext}
-            className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+            className="border-accent/30 bg-accent/15 text-foreground hover:bg-accent/25 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
           >
             Next
           </button>
@@ -150,7 +163,7 @@ export default function ExpandableShowcase({
           return (
             <div
               key={p.title}
-              className={`group bg-background/50 relative w-[320px] overflow-hidden rounded-xl border border-white/10 transition-[transform,border,width] hover:border-white/20 ${isOpen ? "md:w-[380px]" : ""}`}
+              className={`group bg-card border-border hover:bg-accent/10 relative w-[320px] overflow-hidden rounded-xl border transition-[transform,border,width] hover:border-white/20 ${isOpen ? "md:w-[380px]" : ""}`}
               onMouseEnter={() => setExpanded(idx)}
               onMouseLeave={() => setExpanded(null)}
               onFocus={() => setExpanded(idx)}
@@ -162,15 +175,28 @@ export default function ExpandableShowcase({
                   src={p.image}
                   alt={p.title}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                   unoptimized
                 />
+                <div className="bg-accent/20 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
               <div className="p-4">
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <h4 className="text-base font-semibold">{p.title}</h4>
                     <p className="subtle mt-1 text-xs">{p.stack}</p>
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {p.stack.split(",").map((s, i) =>
+                        i < 2 ? (
+                          <span
+                            key={`${p.title}-stack2-${i}`}
+                            className="bg-brand/15 border-brand/30 text-foreground rounded-full border px-2 py-0.5 text-[11px]"
+                          >
+                            {s.trim()}
+                          </span>
+                        ) : null,
+                      )}
+                    </div>
                   </div>
                   <ExternalLink className="size-4 opacity-75" />
                 </div>
@@ -182,7 +208,7 @@ export default function ExpandableShowcase({
                     {p.tags.map((t) => (
                       <span
                         key={t}
-                        className="bg-background/60 rounded-full border border-white/10 px-2 py-1 text-[11px]"
+                        className="bg-accent/15 border-accent/30 text-foreground rounded-full border px-2 py-1 text-[11px]"
                       >
                         {t}
                       </span>
@@ -197,14 +223,14 @@ export default function ExpandableShowcase({
       <div className="mt-6 flex items-center justify-center gap-4">
         <button
           onClick={rotatePrev}
-          className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+          className="border-accent/30 bg-accent/15 text-foreground hover:bg-accent/25 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
         >
           Prev
         </button>
         {viewAllHref && (
           <NextLink
             href={viewAllHref}
-            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+            className="border-brand/30 bg-brand/15 text-foreground hover:bg-brand/25 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
             aria-label={viewAllLabel ?? "View All Projects"}
           >
             <LinkIcon className="size-3" /> {viewAllLabel ?? "View All"}
@@ -212,7 +238,7 @@ export default function ExpandableShowcase({
         )}
         <button
           onClick={rotateNext}
-          className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+          className="border-accent/30 bg-accent/15 text-foreground hover:bg-accent/25 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
         >
           Next
         </button>

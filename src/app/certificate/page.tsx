@@ -118,7 +118,7 @@ function CertificateContent() {
         <TextSplit
           as="h2"
           text="Certificate"
-          className="heading text-4xl"
+          className="heading text-glow-soft text-4xl"
           variant="riseGlow"
           mode="words"
         />
@@ -126,15 +126,16 @@ function CertificateContent() {
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((c) => (
           <div key={c.name}>
-            <div className="group bg-background/40 overflow-hidden rounded-xl border border-white/10 transition-colors hover:border-white/20">
+            <div className="group bg-card border-border hover:bg-brand/10 overflow-hidden rounded-xl border transition-colors hover:border-white/20">
               <div className="relative h-36 w-full">
                 <Image
                   src={c.image}
                   alt={c.name}
                   fill
-                  className="object-cover"
+                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                   unoptimized
                 />
+                <div className="bg-brand/20 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
               <div className="p-6">
                 <h3 className="text-lg font-semibold">{c.name}</h3>
@@ -144,7 +145,7 @@ function CertificateContent() {
                 <div className="mt-4">
                   <a
                     href={c.link}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+                    className="border-accent/30 bg-accent/15 text-foreground hover:bg-accent/25 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
                   >
                     <Link className="size-3" /> View Certificate
                   </a>

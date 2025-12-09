@@ -30,15 +30,15 @@ export default function ContactPage() {
 
   const handleSubmit = async (): Promise<boolean> => {
     const nextErrors: { name?: string; email?: string; message?: string } = {};
-    if (!form.name) nextErrors.name = "Nama wajib diisi";
+    if (!form.name) nextErrors.name = "Name is required";
     if (!form.email) {
-      nextErrors.email = "Email wajib diisi";
+      nextErrors.email = "Email is required";
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(form.email))
-        nextErrors.email = "Format email tidak valid";
+        nextErrors.email = "Invalid email format";
     }
-    if (!form.message) nextErrors.message = "Pesan wajib diisi";
+    if (!form.message) nextErrors.message = "Message is required";
 
     if (nextErrors.name || nextErrors.email || nextErrors.message) {
       setErrors(nextErrors);
@@ -53,19 +53,19 @@ export default function ContactPage() {
       });
 
       if (result.ok) {
-        setStatus({ type: "success", message: "Pesan berhasil dikirim!" });
-        showToast("Pesan berhasil dikirim!", "success");
+        setStatus({ type: "success", message: "Message sent successfully!" });
+        showToast("Message sent successfully!", "success");
         setForm({ name: "", email: "", message: "" });
         setErrors({});
         return true;
       } else {
-        const errMsg = result.error || "Gagal mengirim email";
+        const errMsg = result.error || "Failed to send email";
         showToast(errMsg, "error");
         throw new Error(errMsg);
       }
     } catch (error: unknown) {
       const errMsg =
-        error instanceof Error ? error.message : "Terjadi kesalahan";
+        error instanceof Error ? error.message : "An error occurred";
       setStatus({ type: "error", message: errMsg });
       showToast(errMsg, "error");
       return false;
@@ -79,8 +79,32 @@ export default function ContactPage() {
           Contact
         </h2>
         <p className="text-foreground/70 mb-8">
-          Tertarik bekerja sama atau ada pertanyaan? Kirimkan pesan Anda.
+          Interested in collaborating or have questions? Send me a message.
         </p>
+
+        <div className="mb-6 grid gap-3 sm:grid-cols-3">
+          <div className="bg-card border-border rounded-xl border p-4 text-center">
+            <div className="text-muted text-sm">Availability</div>
+            <div className="text-base">Open to freelance</div>
+          </div>
+          <div className="bg-card border-border rounded-xl border p-4 text-center">
+            <div className="text-muted text-sm">Response Time</div>
+            <div className="text-base">24–48 hours</div>
+          </div>
+          <div className="bg-card border-border rounded-xl border p-4 text-center">
+            <div className="text-muted text-sm">Email</div>
+            <div className="text-base">faizadli9912@gmail.com</div>
+          </div>
+        </div>
+
+        <div className="mb-6 flex flex-wrap items-center gap-3">
+          <a
+            href="/assets/resume.pdf"
+            className="border-brand/30 bg-brand/15 text-foreground hover:bg-brand/25 rounded-full border px-4 py-2 text-sm"
+          >
+            Download CV
+          </a>
+        </div>
 
         {/* Social Links */}
         <div className="mb-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -88,8 +112,8 @@ export default function ContactPage() {
             href="https://github.com/faizadli"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Buka profil GitHub"
-            className="border-border bg-card flex w-full items-center gap-2 rounded-xl border p-3 transition-colors hover:border-white/20"
+            aria-label="Open GitHub profile"
+            className="border-border bg-card hover:bg-accent/10 flex w-full items-center gap-2 rounded-xl border p-3 transition-colors hover:border-white/20"
           >
             <Github className="h-4 w-4" /> GitHub
           </a>
@@ -97,8 +121,8 @@ export default function ContactPage() {
             href="https://www.linkedin.com/in/faiz-adli/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Buka profil LinkedIn"
-            className="border-border bg-card flex w-full items-center gap-2 rounded-xl border p-3 transition-colors hover:border-white/20"
+            aria-label="Open LinkedIn profile"
+            className="border-border bg-card hover:bg-accent/10 flex w-full items-center gap-2 rounded-xl border p-3 transition-colors hover:border-white/20"
           >
             <Linkedin className="h-4 w-4" /> LinkedIn
           </a>
@@ -106,8 +130,8 @@ export default function ContactPage() {
             href="https://www.instagram.com/faizadli.pflo/"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Buka profil Instagram"
-            className="border-border bg-card flex w-full items-center gap-2 rounded-xl border p-3 transition-colors hover:border-white/20"
+            aria-label="Open Instagram profile"
+            className="border-border bg-card hover:bg-accent/10 flex w-full items-center gap-2 rounded-xl border p-3 transition-colors hover:border-white/20"
           >
             <Instagram className="h-4 w-4" /> Instagram
           </a>
@@ -116,7 +140,7 @@ export default function ContactPage() {
         {/* Contact Form */}
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
           <label htmlFor="name" className="sr-only">
-            Nama
+            Name
           </label>
           <input
             id="name"
@@ -124,7 +148,7 @@ export default function ContactPage() {
             autoComplete="name"
             required
             className="border-border bg-card text-foreground w-full rounded-lg border px-4 py-3 transition-colors outline-none focus:border-white/20"
-            placeholder="Nama"
+            placeholder="Name"
             value={form.name}
             onChange={(e) => {
               setForm((f) => ({ ...f, name: e.target.value }));
@@ -165,14 +189,14 @@ export default function ContactPage() {
             </p>
           )}
           <label htmlFor="message" className="sr-only">
-            Pesan
+            Message
           </label>
           <textarea
             id="message"
             name="message"
             required
             className="border-border bg-card text-foreground min-h-32 w-full rounded-lg border px-4 py-3 transition-colors outline-none focus:border-white/20 sm:min-h-40"
-            placeholder="Pesan"
+            placeholder="Message"
             value={form.message}
             onChange={(e) => {
               setForm((f) => ({ ...f, message: e.target.value }));
@@ -192,11 +216,30 @@ export default function ContactPage() {
           <TruckButton
             onSubmit={handleSubmit}
             onReset={() => setStatus({ type: "", message: "" })}
-            labelDefault="Kirim Pesan"
-            labelSuccess="Pesan Terkirim"
+            labelDefault="Send Message"
+            labelSuccess="Message Sent"
             className="mt-8 w-full sm:mt-10 sm:w-auto"
           />
         </form>
+        <div className="mt-8 space-y-3">
+          <details className="bg-card border-border rounded-xl border p-4">
+            <summary className="cursor-pointer font-semibold">
+              What information should I include?
+            </summary>
+            <p className="text-foreground/80 mt-2 text-sm">
+              Describe objectives, timeline, and key features. Include
+              references if available.
+            </p>
+          </details>
+          <details className="bg-card border-border rounded-xl border p-4">
+            <summary className="cursor-pointer font-semibold">
+              Are online meetings available?
+            </summary>
+            <p className="text-foreground/80 mt-2 text-sm">
+              Yes, via Google Meet/Zoom based on the agreed schedule.
+            </p>
+          </details>
+        </div>
         {/* Toasts */}
         <div className="fixed top-4 right-4 z-50 space-y-3">
           {toasts.map((t) => (

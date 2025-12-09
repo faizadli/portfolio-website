@@ -6,7 +6,11 @@ const menuItems = [
   { label: "Home", ariaLabel: "Go to home page", link: "/" },
   { label: "About Me", ariaLabel: "Learn about me", link: "/about" },
   { label: "Projects", ariaLabel: "View my projects", link: "/projects" },
-  { label: "Certificate", ariaLabel: "View my certificates", link: "/certificate" },
+  {
+    label: "Certificate",
+    ariaLabel: "View my certificates",
+    link: "/certificate",
+  },
   { label: "Contact", ariaLabel: "Get in touch", link: "/contact" },
 ];
 
@@ -24,11 +28,16 @@ export default function NavBar() {
       socialItems={socialItems}
       displaySocials={true}
       displayItemNumbering={true}
-      menuButtonColor="#DFD0B8"
-      openMenuButtonColor="#DFD0B8"
+      menuButtonColor="var(--brand)"
+      openMenuButtonColor="var(--brand)"
       changeMenuColorOnOpen={true}
-      colors={["#393E46", "#222831"]}
-      accentColor="#948979"
+      colors={[
+        "var(--surface)",
+        "var(--background)",
+        "var(--brand)",
+        "var(--accent)",
+      ]}
+      accentColor="var(--accent)"
       isFixed={true}
       onMenuOpen={() => console.log("Menu opened")}
       onMenuClose={() => console.log("Menu closed")}

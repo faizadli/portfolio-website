@@ -5,19 +5,18 @@ import ExperienceTimeline from "@/components/ExperienceTimeline";
 
 export default function AboutPage() {
   return (
-    <section className="container py-16 space-y-16">
+    <section className="container space-y-16 py-16">
       {/* Section 1: Biodata Perkenalan */}
       <BioIntro />
 
       {/* Section 2: Timeline Experience */}
       <ExperienceTimeline />
 
-      {/* Section 3: Tech Stack */}
       <div className="space-y-3">
         <TextSplit
           as="h2"
           text={`Tech Stack`}
-          className="text-xl font-semibold text-center"
+          className="heading text-glow-soft text-center text-2xl"
           variant="flipIn"
           mode="words"
         />

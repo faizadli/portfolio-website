@@ -15,13 +15,11 @@ export async function sendEmail({
   to,
 }: SendEmailPayload): Promise<void> {
   if (!name || !email || !message) {
-    throw new Error("Semua field harus diisi");
+    throw new Error("All fields are required");
   }
 
   if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-    throw new Error(
-      "Konfigurasi email tidak ditemukan (EMAIL_USER/EMAIL_PASS)",
-    );
+    throw new Error("Email configuration not found (EMAIL_USER/EMAIL_PASS)");
   }
 
   const transporter = nodemailer.createTransport({
@@ -35,12 +33,12 @@ export async function sendEmail({
   const mailOptions = {
     from: process.env.EMAIL_USER,
     to: to || "faizadli9912@gmail.com",
-    subject: `Pesan Portfolio dari ${name}`,
+    subject: `Portfolio Message from ${name}`,
     html: `
-      <h2>Pesan Baru dari Portfolio</h2>
-      <p><strong>Nama:</strong> ${name}</p>
+      <h2>New Message from Portfolio</h2>
+      <p><strong>Name:</strong> ${name}</p>
       <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Pesan:</strong></p>
+      <p><strong>Message:</strong></p>
       <p>${message.replace(/\n/g, "<br>")}</p>
     `,
   };
@@ -61,7 +59,7 @@ export async function sendEmailAction(
     return { ok: true };
   } catch (e: unknown) {
     const message =
-      e instanceof Error ? e.message : "Terjadi kesalahan saat mengirim email";
+      e instanceof Error ? e.message : "An error occurred while sending email";
     return { ok: false, error: message };
   }
 }

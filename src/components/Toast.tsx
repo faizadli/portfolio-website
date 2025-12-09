@@ -10,7 +10,13 @@ interface ToastProps {
   duration?: number; // ms
 }
 
-export default function Toast({ id, message, type, onClose, duration = 4000 }: ToastProps) {
+export default function Toast({
+  id,
+  message,
+  type,
+  onClose,
+  duration = 4000,
+}: ToastProps) {
   useEffect(() => {
     const t = setTimeout(() => onClose(id), duration);
     return () => clearTimeout(t);
@@ -26,21 +32,23 @@ export default function Toast({ id, message, type, onClose, duration = 4000 }: T
         isSuccess ? "border-emerald-500/40" : "border-red-500/40"
       } bg-card text-foreground shadow-lg`}
     >
-      <div className={`absolute inset-y-0 left-0 w-1 ${isSuccess ? "bg-emerald-500" : "bg-red-500"}`} />
-      <div className="flex items-start gap-3 p-3 sm:p-4 pl-4">
+      <div
+        className={`absolute inset-y-0 left-0 w-1 ${isSuccess ? "bg-emerald-500" : "bg-red-500"}`}
+      />
+      <div className="flex items-start gap-3 p-3 pl-4 sm:p-4">
         {isSuccess ? (
-          <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />
+          <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-500" />
         ) : (
-          <AlertCircle className="w-5 h-5 text-red-500 shrink-0" />
+          <AlertCircle className="h-5 w-5 shrink-0 text-red-500" />
         )}
         <div className="flex-1 text-sm">{message}</div>
         <button
           type="button"
-          aria-label="Tutup notifikasi"
+          aria-label="Close notification"
           onClick={() => onClose(id)}
-          className="inline-flex items-center justify-center rounded-md p-1 text-foreground/70 hover:text-foreground"
+          className="text-foreground/70 hover:text-foreground inline-flex items-center justify-center rounded-md p-1"
         >
-          <X className="w-4 h-4" />
+          <X className="h-4 w-4" />
         </button>
       </div>
     </div>

@@ -41,11 +41,19 @@ const timeline = [
 export default function ExperienceTimeline() {
   return (
     <section className="container py-16">
-      <Reveal y={28}><TextSplit as="h2" text="Experience" className="heading text-4xl text-center" variant="wave" mode="words" /></Reveal>
+      <Reveal y={28}>
+        <TextSplit
+          as="h2"
+          text="Experience"
+          className="heading text-center text-4xl"
+          variant="wave"
+          mode="words"
+        />
+      </Reveal>
 
       <div className="relative mx-auto mt-12 max-w-5xl">
         {/* Vertical line (left on mobile, center on md+) */}
-        <div className="pointer-events-none absolute left-6 md:left-1/2 top-0 md:-translate-x-1/2 h-full w-[2px] bg-white/10" />
+        <div className="pointer-events-none absolute top-0 left-6 h-full w-[2px] bg-white/10 md:left-1/2 md:-translate-x-1/2" />
 
         <ul className="space-y-16">
           {timeline.map((t, i) => {
@@ -54,25 +62,33 @@ export default function ExperienceTimeline() {
             return (
               <li key={`${t.company}-${i}`} className="relative">
                 {/* Marker */}
-                <div className="absolute left-6 md:left-1/2 top-0 translate-x-0 md:-translate-x-1/2 -translate-y-1/2">
-                  <div className="relative size-11 rounded-full border border-white/10 bg-background">
-                    <div className="absolute inset-0 rounded-full bg-gradient-to-br from-brand/30 to-accent/30 blur-sm" />
-                    <div className="relative m-1 grid size-9 place-items-center rounded-full bg-background border border-white/10">
-                      <Icon className="size-5 text-accent" />
+                <div className="absolute top-0 left-6 translate-x-0 -translate-y-1/2 md:left-1/2 md:-translate-x-1/2">
+                  <div className="bg-background relative size-11 rounded-full border border-white/10">
+                    <div className="from-brand/30 to-accent/30 absolute inset-0 rounded-full bg-gradient-to-br blur-sm" />
+                    <div className="bg-background relative m-1 grid size-9 place-items-center rounded-full border border-white/10">
+                      <Icon className="text-accent size-5" />
                     </div>
                   </div>
                 </div>
 
                 {/* Card */}
-                <div className={`pl-16 md:pl-0 grid md:grid-cols-2 ${isLeft ? "md:pr-10" : "md:pl-10"}`}>
-                  <div className={`${isLeft ? "md:col-start-1" : "md:col-start-2"}`}>
+                <div
+                  className={`grid pl-16 md:grid-cols-2 md:pl-0 ${isLeft ? "md:pr-10" : "md:pl-10"}`}
+                >
+                  <div
+                    className={`${isLeft ? "md:col-start-1" : "md:col-start-2"}`}
+                  >
                     <Reveal y={24} delay={i * 0.08}>
-                      <article className="rounded-xl border border-white/10 bg-background/60 p-6 shadow-sm hover:border-white/20 transition-colors">
+                      <article className="border-border bg-card hover:bg-accent/10 rounded-xl border p-6 shadow-sm transition-colors transition-transform hover:-translate-y-0.5 hover:border-white/20">
                         <h3 className="text-lg font-semibold">{t.company}</h3>
                         <div className="mt-3 space-y-1.5">
-                          <p className="text-sm text-foreground/80">{t.field}</p>
-                          <p className="text-sm text-foreground/80">{t.type}</p>
-                          <p className="text-sm text-foreground/80">{t.start} - {t.end}</p>
+                          <p className="text-foreground/80 text-sm">
+                            {t.field}
+                          </p>
+                          <p className="text-foreground/80 text-sm">{t.type}</p>
+                          <p className="text-foreground/80 text-sm">
+                            {t.start} - {t.end}
+                          </p>
                         </div>
                       </article>
                     </Reveal>
