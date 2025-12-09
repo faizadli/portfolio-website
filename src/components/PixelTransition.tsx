@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState, CSSProperties } from 'react';
-import { gsap } from 'gsap';
+import React, { useRef, useEffect, useState, CSSProperties } from "react";
+import { gsap } from "gsap";
 
 interface PixelTransitionProps {
   firstContent: React.ReactNode | string;
@@ -17,35 +17,48 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
   firstContent,
   secondContent,
   gridSize = 7,
-  pixelColor = 'currentColor',
+  pixelColor = "currentColor",
   animationStepDuration = 0.3,
   once = false,
-  aspectRatio = '100%',
-  className = '',
-  style = {}
+  aspectRatio = "100%",
+  className = "",
+  style = {},
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const pixelGridRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLDivElement>(null);
   const delayedCallRef = useRef<gsap.core.Tween | null>(null);
   const [isActive, setIsActive] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-  useEffect(() => {
-    setIsTouchDevice(
-      'ontouchstart' in window || navigator.maxTouchPoints > 0 || window.matchMedia('(pointer: coarse)').matches
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return (
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      window.matchMedia("(pointer: coarse)").matches
     );
+  });
+  useEffect(() => {
+    const mq = window.matchMedia("(pointer: coarse)");
+    const handler = () => {
+      setIsTouchDevice(
+        "ontouchstart" in window || navigator.maxTouchPoints > 0 || mq.matches,
+      );
+    };
+    mq.addEventListener("change", handler);
+    return () => {
+      mq.removeEventListener("change", handler);
+    };
   }, []);
 
   useEffect(() => {
     const pixelGridEl = pixelGridRef.current;
     if (!pixelGridEl) return;
 
-    pixelGridEl.innerHTML = '';
+    pixelGridEl.innerHTML = "";
     for (let row = 0; row < gridSize; row++) {
       for (let col = 0; col < gridSize; col++) {
-        const pixel = document.createElement('div');
-        pixel.classList.add('absolute');
+        const pixel = document.createElement("div");
+        pixel.classList.add("absolute");
         pixel.style.backgroundColor = pixelColor;
 
         const size = 100 / gridSize;
@@ -53,8 +66,8 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
         pixel.style.height = `${size}%`;
         pixel.style.left = `${col * size}%`;
         pixel.style.top = `${row * size}%`;
-        pixel.style.display = 'none';
-        
+        pixel.style.display = "none";
+
         pixelGridEl.appendChild(pixel);
       }
     }
@@ -66,7 +79,7 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
     const activeEl = activeRef.current;
     if (!pixelGridEl || !activeEl) return;
 
-    const pixels = pixelGridEl.querySelectorAll('div');
+    const pixels = pixelGridEl.querySelectorAll("div");
     if (!pixels.length) return;
 
     gsap.killTweensOf(pixels);
@@ -74,33 +87,33 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
       delayedCallRef.current.kill();
     }
 
-    gsap.set(pixels, { display: 'none' });
+    gsap.set(pixels, { display: "none" });
 
     const totalPixels = pixels.length;
     const staggerDuration = animationStepDuration / totalPixels;
 
     gsap.to(pixels, {
-      display: 'block',
+      display: "block",
       duration: 0,
       stagger: {
         each: staggerDuration,
-        from: 'random'
-      }
+        from: "random",
+      },
     });
 
     delayedCallRef.current = gsap.delayedCall(animationStepDuration, () => {
-      activeEl.style.display = activate ? 'block' : 'none';
-      activeEl.style.pointerEvents = activate ? 'none' : '';
+      activeEl.style.display = activate ? "block" : "none";
+      activeEl.style.pointerEvents = activate ? "none" : "";
     });
 
     gsap.to(pixels, {
-      display: 'none',
+      display: "none",
       duration: 0,
       delay: animationStepDuration,
       stagger: {
         each: staggerDuration,
-        from: 'random'
-      }
+        from: "random",
+      },
     });
   };
 
@@ -121,23 +134,24 @@ const PixelTransition: React.FC<PixelTransitionProps> = ({
     <div
       ref={containerRef}
       className={`relative overflow-hidden ${className}`}
-      style={{ 
-        paddingBottom: aspectRatio !== '0' ? aspectRatio : undefined,
-        height: aspectRatio === '0' ? '100%' : undefined,
-        ...style 
+      style={{
+        paddingBottom: aspectRatio !== "0" ? aspectRatio : undefined,
+        height: aspectRatio === "0" ? "100%" : undefined,
+        ...style,
       }}
       onMouseEnter={!isTouchDevice ? handleEnter : undefined}
       onMouseLeave={!isTouchDevice ? handleLeave : undefined}
       onClick={isTouchDevice ? handleClick : undefined}
     >
-      <div ref={pixelGridRef} className="absolute inset-0 pointer-events-none z-10" />
-      <div className="absolute inset-0">
-        {firstContent}
-      </div>
+      <div
+        ref={pixelGridRef}
+        className="pointer-events-none absolute inset-0 z-10"
+      />
+      <div className="absolute inset-0">{firstContent}</div>
       <div
         ref={activeRef}
         className="absolute inset-0"
-        style={{ display: 'none' }}
+        style={{ display: "none" }}
       >
         {secondContent}
       </div>

@@ -1,42 +1,65 @@
 export {};
 
-declare module '*.glb' {
+declare module "*.glb" {
   const content: string;
   export default content;
 }
 
-declare module '*.png' {
+declare module "*.png" {
   const content: string;
   export default content;
 }
 
-declare module 'meshline' {
-  import { BufferGeometry, Material } from 'three';
-  
+declare module "meshline" {
+  import type {
+    BufferGeometry,
+    Material,
+    Texture,
+    ColorRepresentation,
+    Vector2,
+  } from "three";
+
   export class MeshLineGeometry extends BufferGeometry {
-    setPoints(points: any[]): void;
+    setPoints(
+      points:
+        | number[]
+        | Array<{ x: number; y: number; z?: number }>
+        | Array<{ x: number; y: number }>,
+    ): void;
   }
-  
+
+  export interface MeshLineMaterialParameters {
+    color?: ColorRepresentation;
+    depthTest?: boolean;
+    resolution?: Vector2;
+    useMap?: boolean;
+    map?: Texture;
+    repeat?: [number, number];
+    lineWidth?: number;
+    opacity?: number;
+    transparent?: boolean;
+  }
+
   export class MeshLineMaterial extends Material {
-    constructor(params?: any);
+    constructor(params?: MeshLineMaterialParameters);
   }
 }
 
-declare global {
+declare module "react" {
   namespace JSX {
     interface IntrinsicElements {
-      meshLineGeometry: any;
+      meshLineGeometry: Record<string, unknown>;
       meshLineMaterial: {
         color?: string;
         depthTest?: boolean;
-        resolution?: [number, number];
+        resolution?: [number, number] | import("three").Vector2;
         useMap?: boolean;
-        map?: any;
+        map?: import("three").Texture;
         repeat?: [number, number];
         lineWidth?: number;
         opacity?: number;
         transparent?: boolean;
-        [key: string]: any;
+        [key: string]: unknown;
       };
     }
   }

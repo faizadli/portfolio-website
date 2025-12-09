@@ -4,17 +4,30 @@ import NextLink from "next/link";
 import { Link } from "lucide-react";
 import { useState, useRef, useLayoutEffect } from "react";
 
-type Item = { name: string; issuer: string; year: number; image: string; link: string };
+type Item = {
+  name: string;
+  issuer: string;
+  year: number;
+  image: string;
+  link: string;
+};
 
-export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { items: Item[]; viewAllHref?: string; viewAllLabel?: string }) {
+export default function ThreeDSlider({
+  items,
+  viewAllHref,
+  viewAllLabel,
+}: {
+  items: Item[];
+  viewAllHref?: string;
+  viewAllLabel?: string;
+}) {
   const [list, setList] = useState(items);
   const GAP = 24;
   const containerRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLUListElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState(0);
   const [cardWidth, setCardWidth] = useState(280);
   const [visibleCount, setVisibleCount] = useState(3);
-  const [hydrated, setHydrated] = useState(false);
+  const [hydrated] = useState(true);
 
   const rotateArray = (arr: typeof list, k: number) => {
     const len = arr.length;
@@ -24,7 +37,6 @@ export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { ite
 
   useLayoutEffect(() => {
     const update = () => {
-      setContainerWidth(containerRef.current?.offsetWidth || 0);
       const width = containerRef.current?.offsetWidth || window.innerWidth || 0;
 
       let count: number;
@@ -48,7 +60,6 @@ export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { ite
     };
     update();
     window.addEventListener("resize", update);
-    setHydrated(true);
     return () => window.removeEventListener("resize", update);
   }, [items.length]);
 
@@ -58,17 +69,20 @@ export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { ite
   const end = Math.min(list.length, start + visibleCount);
   const visibleItems = list.slice(start, end);
   const visibleCenter = Math.floor(visibleItems.length / 2);
-  const ulWidth = visibleItems.length * cardWidth + (visibleItems.length - 1) * GAP;
+  const ulWidth =
+    visibleItems.length * cardWidth + (visibleItems.length - 1) * GAP;
 
   if (!hydrated) {
-    return <div ref={containerRef} className="mt-6 relative mx-auto pb-10 w-full" />;
+    return (
+      <div ref={containerRef} className="relative mx-auto mt-6 w-full pb-10" />
+    );
   }
 
   return (
-    <div ref={containerRef} className="mt-6 relative mx-auto pb-10 w-full">
+    <div ref={containerRef} className="relative mx-auto mt-6 w-full pb-10">
       <ul
         ref={listRef}
-        className="flex gap-6 px-1 items-stretch mx-auto"
+        className="mx-auto flex items-stretch gap-6 px-1"
         style={{ width: ulWidth, perspective: 800 }}
         aria-live="polite"
       >
@@ -79,18 +93,36 @@ export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { ite
           return (
             <li
               key={c.name}
-              className="relative rounded-xl border border-white/10 bg-background/50 overflow-hidden cursor-pointer"
-              style={{ width: cardWidth, transform: `rotateY(${rotateY}deg) scale(${scale})`, transformStyle: "preserve-3d", transition: "transform 300ms ease" }}
-              onClick={() => setList((arr) => rotateArray(arr, (start + idx) - CENTER))}
+              className="bg-background/50 relative cursor-pointer overflow-hidden rounded-xl border border-white/10"
+              style={{
+                width: cardWidth,
+                transform: `rotateY(${rotateY}deg) scale(${scale})`,
+                transformStyle: "preserve-3d",
+                transition: "transform 300ms ease",
+              }}
+              onClick={() =>
+                setList((arr) => rotateArray(arr, start + idx - CENTER))
+              }
               aria-current={visibleCenter === idx}
             >
               <div className="relative h-36 w-full">
-                <Image src={c.image} alt={c.name} fill className="object-cover" unoptimized />
+                <Image
+                  src={c.image}
+                  alt={c.name}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
               <div className="p-4">
                 <h4 className="text-base font-semibold">{c.name}</h4>
-                <p className="mt-1 text-xs subtle">{c.issuer} · {c.year}</p>
-                <a href={c.link} className="mt-3 inline-flex items-center gap-2 text-xs rounded-full border border-white/10 px-3 py-1.5 hover:border-white/20">
+                <p className="subtle mt-1 text-xs">
+                  {c.issuer} · {c.year}
+                </p>
+                <a
+                  href={c.link}
+                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+                >
                   <Link className="size-3" /> View Certificate
                 </a>
               </div>
@@ -100,14 +132,18 @@ export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { ite
       </ul>
       <div className="mt-6 flex items-center justify-center gap-4">
         <button
-          onClick={() => setList((arr) => [arr[arr.length - 1], ...arr.slice(0, -1)])}
-          className="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-xs"
+          onClick={() =>
+            setList((arr) => [arr[arr.length - 1], ...arr.slice(0, -1)])
+          }
+          className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
           aria-label="Previous"
-        >Prev</button>
+        >
+          Prev
+        </button>
         {viewAllHref && (
           <NextLink
             href={viewAllHref}
-            className="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-xs inline-flex items-center gap-2"
+            className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
             aria-label={viewAllLabel ?? "View All Certificates"}
           >
             <Link className="size-3" /> {viewAllLabel ?? "View All"}
@@ -115,9 +151,11 @@ export default function ThreeDSlider({ items, viewAllHref, viewAllLabel }: { ite
         )}
         <button
           onClick={() => setList((arr) => [...arr.slice(1), arr[0]])}
-          className="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-xs"
+          className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
           aria-label="Next"
-        >Next</button>
+        >
+          Next
+        </button>
       </div>
     </div>
   );

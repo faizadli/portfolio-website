@@ -33,7 +33,7 @@ export default function TextSplit({
     const el = ref.current;
     if (!el) return;
     const targets = Array.from(
-      el.querySelectorAll<HTMLElement>(mode === "words" ? ".word" : ".char")
+      el.querySelectorAll<HTMLElement>(mode === "words" ? ".word" : ".char"),
     );
     const ctx = gsap.context(() => {
       // Base set
@@ -96,37 +96,121 @@ export default function TextSplit({
     return () => ctx.revert();
   }, [stagger, y, delay, variant, mode]);
 
-  const Tag: any = as;
-  return (
-    <Tag
-      ref={ref}
-      className={shimmer ? `${className} text-shimmer` : className}
-    >
-      {mode === "words"
-        ? text.split(/(\s+)/).map((token, i) => {
-            const isSpace = /\s+/.test(token);
-            if (isSpace) {
-              return (
-                <span key={`space-${i}`} className="inline-block">
-                  {"\u00A0"}
-                </span>
-              );
-            }
+  const children =
+    mode === "words"
+      ? text.split(/(\s+)/).map((token, i) => {
+          const isSpace = /\s+/.test(token);
+          if (isSpace) {
             return (
-              <span key={`word-${i}`} className="word inline-block will-change-transform">
-                {Array.from(token).map((c, j) => (
-                  <span key={`char-${i}-${j}`} className="char inline-block will-change-transform">
-                    {c}
-                  </span>
-                ))}
+              <span key={`space-${i}`} className="inline-block">
+                {"\u00A0"}
               </span>
             );
-          })
-        : Array.from(text).map((c, i) => (
-            <span key={i} className="char inline-block will-change-transform">
-              {c === " " ? "\u00A0" : c}
+          }
+          return (
+            <span
+              key={`word-${i}`}
+              className="word inline-block will-change-transform"
+            >
+              {Array.from(token).map((c, j) => (
+                <span
+                  key={`char-${i}-${j}`}
+                  className="char inline-block will-change-transform"
+                >
+                  {c}
+                </span>
+              ))}
             </span>
-          ))}
-    </Tag>
-  );
+          );
+        })
+      : Array.from(text).map((c, i) => (
+          <span key={i} className="char inline-block will-change-transform">
+            {c === " " ? "\u00A0" : c}
+          </span>
+        ));
+
+  switch (as) {
+    case "h1":
+      return (
+        <h1
+          ref={ref as React.RefObject<HTMLHeadingElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </h1>
+      );
+    case "h2":
+      return (
+        <h2
+          ref={ref as React.RefObject<HTMLHeadingElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </h2>
+      );
+    case "h3":
+      return (
+        <h3
+          ref={ref as React.RefObject<HTMLHeadingElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </h3>
+      );
+    case "h4":
+      return (
+        <h4
+          ref={ref as React.RefObject<HTMLHeadingElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </h4>
+      );
+    case "h5":
+      return (
+        <h5
+          ref={ref as React.RefObject<HTMLHeadingElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </h5>
+      );
+    case "h6":
+      return (
+        <h6
+          ref={ref as React.RefObject<HTMLHeadingElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </h6>
+      );
+    case "p":
+      return (
+        <p
+          ref={ref as React.RefObject<HTMLParagraphElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </p>
+      );
+    case "span":
+      return (
+        <span
+          ref={ref as React.RefObject<HTMLSpanElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </span>
+      );
+    case "div":
+    default:
+      return (
+        <div
+          ref={ref as React.RefObject<HTMLDivElement>}
+          className={shimmer ? `${className} text-shimmer` : className}
+        >
+          {children}
+        </div>
+      );
+  }
 }

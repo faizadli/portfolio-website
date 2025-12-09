@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { gsap, ScrollTrigger } from "@/lib/gsap";
+import { gsap } from "@/lib/gsap";
 
 type Props = {
   children: React.ReactNode;
@@ -10,7 +10,12 @@ type Props = {
   className?: string;
 };
 
-export default function Reveal({ children, y = 24, delay = 0, className = "" }: Props) {
+export default function Reveal({
+  children,
+  y = 24,
+  delay = 0,
+  className = "",
+}: Props) {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

@@ -31,41 +31,59 @@ export default function TruckButton({
     button.classList.add("animation");
 
     setTimeout(() => {
-      button.style.setProperty('--box-s', '1');
-      button.style.setProperty('--box-o', '1');
+      button.style.setProperty("--box-s", "1");
+      button.style.setProperty("--box-o", "1");
     }, 500);
 
     setTimeout(() => {
-      box.style.transform = 'translate(0px, -6px) scale(1)';
+      box.style.transform = "translate(0px, -6px) scale(1)";
     }, 700);
 
     setTimeout(() => {
-      button.style.setProperty('--hx', '-5');
-      button.style.setProperty('--bx', '50');
+      button.style.setProperty("--hx", "-5");
+      button.style.setProperty("--bx", "50");
     }, 920);
 
     setTimeout(() => {
-      box.style.transform = 'translate(0px, 0px) scale(1)';
+      box.style.transform = "translate(0px, 0px) scale(1)";
     }, 1150);
 
     setTimeout(() => {
-      button.style.setProperty('--truck-y', '1');
-      button.style.setProperty('--truck-y-n', '-25');
+      button.style.setProperty("--truck-y", "1");
+      button.style.setProperty("--truck-y-n", "-25");
     }, 1250);
 
     setTimeout(() => {
       let progress = 0;
       const interval = setInterval(() => {
         progress += 0.01;
-        button.style.setProperty('--progress', Math.min(progress, 1).toString());
+        button.style.setProperty(
+          "--progress",
+          Math.min(progress, 1).toString(),
+        );
         if (progress >= 1) clearInterval(interval);
       }, 24);
 
-      setTimeout(() => truck.style.transform = 'rotateX(90deg) translate3d(0px, -26px, 12px)', 0);
-      setTimeout(() => truck.style.transform = 'rotateX(90deg) translate3d(40px, -26px, 12px)', 400);
-      setTimeout(() => truck.style.transform = 'rotateX(90deg) translate3d(20px, -26px, 12px)', 1400);
+      setTimeout(
+        () =>
+          (truck.style.transform =
+            "rotateX(90deg) translate3d(0px, -26px, 12px)"),
+        0,
+      );
+      setTimeout(
+        () =>
+          (truck.style.transform =
+            "rotateX(90deg) translate3d(40px, -26px, 12px)"),
+        400,
+      );
+      setTimeout(
+        () =>
+          (truck.style.transform =
+            "rotateX(90deg) translate3d(20px, -26px, 12px)"),
+        1400,
+      );
       setTimeout(() => {
-        truck.style.transform = 'rotateX(90deg) translate3d(96px, -26px, 12px)';
+        truck.style.transform = "rotateX(90deg) translate3d(96px, -26px, 12px)";
         button.classList.add("done");
       }, 2000);
     }, 1450);
@@ -79,16 +97,16 @@ export default function TruckButton({
     if (!button || !truck || !box) return;
 
     button.classList.remove("animation", "done");
-    truck.style.transform = 'rotateX(90deg) translate3d(4px, -26px, 12px)';
-    box.style.transform = 'translate(-24px, -6px) scale(0.5)';
+    truck.style.transform = "rotateX(90deg) translate3d(4px, -26px, 12px)";
+    box.style.transform = "translate(-24px, -6px) scale(0.5)";
 
-    button.style.setProperty('--progress', '0');
-    button.style.setProperty('--hx', '0');
-    button.style.setProperty('--bx', '0');
-    button.style.setProperty('--box-s', '0.5');
-    button.style.setProperty('--box-o', '0');
-    button.style.setProperty('--truck-y', '0');
-    button.style.setProperty('--truck-y-n', '-26');
+    button.style.setProperty("--progress", "0");
+    button.style.setProperty("--hx", "0");
+    button.style.setProperty("--bx", "0");
+    button.style.setProperty("--box-s", "0.5");
+    button.style.setProperty("--box-o", "0");
+    button.style.setProperty("--truck-y", "0");
+    button.style.setProperty("--truck-y-n", "-26");
   };
 
   const handleClick = async () => {
@@ -97,7 +115,9 @@ export default function TruckButton({
 
     if (button.classList.contains("done")) {
       resetButton();
-      onReset && onReset();
+      if (onReset) {
+        onReset();
+      }
       // Lanjutkan proses kirim pada klik yang sama tanpa perlu klik kedua
     }
 

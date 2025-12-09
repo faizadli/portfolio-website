@@ -7,18 +7,90 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense } from "react";
 
 const certificates = [
-  { name: "Front-End Developer", issuer: "Dicoding", year: 2023, image: "https://placehold.co/600x400/png?text=Front-End+Developer", link: "#" },
-  { name: "React Advanced", issuer: "Udemy", year: 2024, image: "https://placehold.co/600x400/png?text=React+Advanced", link: "#" },
-  { name: "Web Accessibility", issuer: "Coursera", year: 2024, image: "https://placehold.co/600x400/png?text=Web+Accessibility", link: "#" },
-  { name: "UI Design Basics", issuer: "Coursera", year: 2023, image: "https://placehold.co/600x400/png?text=UI+Design+Basics", link: "#" },
-  { name: "Performance Optimization", issuer: "Udacity", year: 2024, image: "https://placehold.co/600x400/png?text=Performance+Optimization", link: "#" },
-  { name: "JavaScript Fundamentals", issuer: "freeCodeCamp", year: 2022, image: "https://placehold.co/600x400/png?text=JavaScript+Fundamentals", link: "#" },
-  { name: "TypeScript Essentials", issuer: "Udemy", year: 2023, image: "https://placehold.co/600x400/png?text=TypeScript+Essentials", link: "#" },
-  { name: "React Testing", issuer: "Testing Library", year: 2024, image: "https://placehold.co/600x400/png?text=React+Testing", link: "#" },
-  { name: "Node.js Basics", issuer: "Coursera", year: 2022, image: "https://placehold.co/600x400/png?text=Node.js+Basics", link: "#" },
-  { name: "CSS Mastery", issuer: "Udacity", year: 2023, image: "https://placehold.co/600x400/png?text=CSS+Mastery", link: "#" },
-  { name: "Accessibility Advanced", issuer: "Deque", year: 2024, image: "https://placehold.co/600x400/png?text=Accessibility+Advanced", link: "#" },
-  { name: "Performance Web", issuer: "Google", year: 2024, image: "https://placehold.co/600x400/png?text=Performance+Web", link: "#" },
+  {
+    name: "Front-End Developer",
+    issuer: "Dicoding",
+    year: 2023,
+    image: "https://placehold.co/600x400/png?text=Front-End+Developer",
+    link: "#",
+  },
+  {
+    name: "React Advanced",
+    issuer: "Udemy",
+    year: 2024,
+    image: "https://placehold.co/600x400/png?text=React+Advanced",
+    link: "#",
+  },
+  {
+    name: "Web Accessibility",
+    issuer: "Coursera",
+    year: 2024,
+    image: "https://placehold.co/600x400/png?text=Web+Accessibility",
+    link: "#",
+  },
+  {
+    name: "UI Design Basics",
+    issuer: "Coursera",
+    year: 2023,
+    image: "https://placehold.co/600x400/png?text=UI+Design+Basics",
+    link: "#",
+  },
+  {
+    name: "Performance Optimization",
+    issuer: "Udacity",
+    year: 2024,
+    image: "https://placehold.co/600x400/png?text=Performance+Optimization",
+    link: "#",
+  },
+  {
+    name: "JavaScript Fundamentals",
+    issuer: "freeCodeCamp",
+    year: 2022,
+    image: "https://placehold.co/600x400/png?text=JavaScript+Fundamentals",
+    link: "#",
+  },
+  {
+    name: "TypeScript Essentials",
+    issuer: "Udemy",
+    year: 2023,
+    image: "https://placehold.co/600x400/png?text=TypeScript+Essentials",
+    link: "#",
+  },
+  {
+    name: "React Testing",
+    issuer: "Testing Library",
+    year: 2024,
+    image: "https://placehold.co/600x400/png?text=React+Testing",
+    link: "#",
+  },
+  {
+    name: "Node.js Basics",
+    issuer: "Coursera",
+    year: 2022,
+    image: "https://placehold.co/600x400/png?text=Node.js+Basics",
+    link: "#",
+  },
+  {
+    name: "CSS Mastery",
+    issuer: "Udacity",
+    year: 2023,
+    image: "https://placehold.co/600x400/png?text=CSS+Mastery",
+    link: "#",
+  },
+  {
+    name: "Accessibility Advanced",
+    issuer: "Deque",
+    year: 2024,
+    image: "https://placehold.co/600x400/png?text=Accessibility+Advanced",
+    link: "#",
+  },
+  {
+    name: "Performance Web",
+    issuer: "Google",
+    year: 2024,
+    image: "https://placehold.co/600x400/png?text=Performance+Web",
+    link: "#",
+  },
 ];
 
 function CertificateContent() {
@@ -42,19 +114,38 @@ function CertificateContent() {
 
   return (
     <section className="container mx-auto py-16">
-      <Reveal y={28}><TextSplit as="h2" text="Certificate" className="heading text-4xl" variant="riseGlow" mode="words" /></Reveal>
+      <Reveal y={28}>
+        <TextSplit
+          as="h2"
+          text="Certificate"
+          className="heading text-4xl"
+          variant="riseGlow"
+          mode="words"
+        />
+      </Reveal>
       <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {visible.map((c, i) => (
+        {visible.map((c) => (
           <div key={c.name}>
-            <div className="group rounded-xl border border-white/10 bg-background/40 overflow-hidden hover:border-white/20 transition-colors">
+            <div className="group bg-background/40 overflow-hidden rounded-xl border border-white/10 transition-colors hover:border-white/20">
               <div className="relative h-36 w-full">
-                <Image src={c.image} alt={c.name} fill className="object-cover" unoptimized />
+                <Image
+                  src={c.image}
+                  alt={c.name}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
               </div>
               <div className="p-6">
                 <h3 className="text-lg font-semibold">{c.name}</h3>
-                <p className="mt-1 text-sm subtle">{c.issuer} · {c.year}</p>
+                <p className="subtle mt-1 text-sm">
+                  {c.issuer} · {c.year}
+                </p>
                 <div className="mt-4">
-                  <a href={c.link} className="inline-flex items-center gap-2 text-xs rounded-full border border-white/10 px-3 py-1.5 hover:border-white/20">
+                  <a
+                    href={c.link}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+                  >
                     <Link className="size-3" /> View Certificate
                   </a>
                 </div>
@@ -69,31 +160,33 @@ function CertificateContent() {
           onClick={() => setPage(clampedPage - 1)}
           disabled={clampedPage <= 1}
           aria-disabled={clampedPage <= 1}
-          className="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+          className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Prev
         </button>
-        <span className="text-xs subtle">Page {clampedPage} of {totalPages}</span>
+        <span className="subtle text-xs">
+          Page {clampedPage} of {totalPages}
+        </span>
         <button
           onClick={() => setPage(clampedPage + 1)}
           disabled={clampedPage >= totalPages}
           aria-disabled={clampedPage >= totalPages}
-          className="px-3 py-1.5 rounded-full border border-white/10 hover:border-white/20 text-xs disabled:opacity-50 disabled:cursor-not-allowed"
+          className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20 disabled:cursor-not-allowed disabled:opacity-50"
         >
           Next
         </button>
       </div>
-      <div className="mt-3 flex items-center justify-center gap-2 flex-wrap">
+      <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
         {pages.map((n) => (
           <button
             key={n}
             onClick={() => setPage(n)}
             aria-current={n === clampedPage ? "page" : undefined}
             className={
-              `px-3 py-1.5 rounded-full text-xs border transition-colors ` +
+              `rounded-full border px-3 py-1.5 text-xs transition-colors ` +
               (n === clampedPage
-                ? "border-brand bg-brand/90 text-black hover:bg-brand"
-                : "border-white/10 bg-white/5 hover:bg-white/10 text-foreground")
+                ? "border-brand bg-brand/90 hover:bg-brand text-black"
+                : "text-foreground border-white/10 bg-white/5 hover:bg-white/10")
             }
           >
             {n}
@@ -106,7 +199,13 @@ function CertificateContent() {
 
 export default function CertificatePage() {
   return (
-    <Suspense fallback={<section className="container mx-auto py-16"><p className="subtle">Loading certificates…</p></section>}>
+    <Suspense
+      fallback={
+        <section className="container mx-auto py-16">
+          <p className="subtle">Loading certificates…</p>
+        </section>
+      }
+    >
       <CertificateContent />
     </Suspense>
   );
