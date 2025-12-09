@@ -1,6 +1,1 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
-# Jalankan lint-staged untuk format + lint otomatis pada staged files.
-# Jika ada error/warning (karena --max-warnings=0), commit akan dibatalkan.
 npx --no-install lint-staged
