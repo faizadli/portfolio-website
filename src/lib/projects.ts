@@ -168,12 +168,4 @@ export const projectsData: ProjectItem[] = [
     url: "#",
     tags: ["Kanban", "DnD", "Teams"],
   },
-  {
-    title: "Portfolio Mobile",
-    stack: "React Native",
-    desc: "Versi mobile dengan navigasi tab dan animasi.",
-    image: "https://placehold.co/600x400/png?text=Portfolio+Mobile",
-    url: "#",
-    tags: ["Mobile", "Tabs", "Animations"],
-  },
 ];
