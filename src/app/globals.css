@@ -7,46 +7,46 @@
 /* Dark elegant theme defaults – make dark the default */
 :root {
   /* Palette */
-  --background: #222831;           /* charcoal */
-  --surface: #393E46;              /* deep slate */
-  --accent: #948979;               /* warm taupe */
-  --brand: #DFD0B8;                /* light sand */
+  --background: #121212; /* charcoal black */
+  --surface: #1a1a1a; /* near-black surface */
+  --accent: #888888; /* soft gray */
+  --brand: #e0e0e0; /* light gray */
 
   /* Core tokens */
-  --foreground: #DFD0B8;
+  --foreground: #e0e0e0;
   --radius: 0.625rem;
-  --card: #393E46;
-  --card-foreground: #DFD0B8;
-  --popover: #393E46;
-  --popover-foreground: #DFD0B8;
-  --primary: #DFD0B8;
-  --primary-foreground: #222831;
-  --secondary: #393E46;
-  --secondary-foreground: #DFD0B8;
-  --muted: #948979;
-  --muted-foreground: #948979;
-  --accent-foreground: #222831;
-  --destructive: #948979;          /* placeholder */
-  --border: #393E46;
-  --input: #393E46;
-  --ring: #948979;
+  --card: #1a1a1a;
+  --card-foreground: #e0e0e0;
+  --popover: #1a1a1a;
+  --popover-foreground: #e0e0e0;
+  --primary: #e0e0e0;
+  --primary-foreground: #121212;
+  --secondary: #1a1a1a;
+  --secondary-foreground: #e0e0e0;
+  --muted: #b0b0b0;
+  --muted-foreground: #b0b0b0;
+  --accent-foreground: #121212;
+  --destructive: #888888; /* placeholder */
+  --border: #444444;
+  --input: #444444;
+  --ring: #888888;
 
   /* Charts (kept, can be remapped later) */
-  --chart-1: #DFD0B8;
+  --chart-1: #dfd0b8;
   --chart-2: #948979;
-  --chart-3: #393E46;
+  --chart-3: #393e46;
   --chart-4: #222831;
   --chart-5: #948979;
 
   /* Sidebar */
-  --sidebar: #222831;
-  --sidebar-foreground: #DFD0B8;
-  --sidebar-primary: #DFD0B8;
-  --sidebar-primary-foreground: #222831;
-  --sidebar-accent: #948979;
-  --sidebar-accent-foreground: #222831;
-  --sidebar-border: #393E46;
-  --sidebar-ring: #948979;
+  --sidebar: #121212;
+  --sidebar-foreground: #e0e0e0;
+  --sidebar-primary: #e0e0e0;
+  --sidebar-primary-foreground: #121212;
+  --sidebar-accent: #888888;
+  --sidebar-accent-foreground: #121212;
+  --sidebar-border: #444444;
+  --sidebar-ring: #888888;
 }
 
 @theme inline {
@@ -91,35 +91,66 @@
 }
 
 /* Base styles */
-* { box-sizing: border-box; }
-html, body { height: 100%; }
+* {
+  box-sizing: border-box;
+}
+html,
 body {
-  font-feature-settings: "ss01" on, "ss02" on, "ss03" on;
+  height: 100%;
+}
+body {
+  font-feature-settings:
+    "ss01" on,
+    "ss02" on,
+    "ss03" on;
 }
 
 /* Selection */
-::selection { background: rgba(148,137,121,0.35); color: #000; }
+::selection {
+  background: rgba(136, 136, 136, 0.35);
+  color: #000;
+}
 
 /* Containers */
-.container { max-width: 1200px; margin-inline: auto; padding-inline: 1rem; }
+.container {
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
 
 /* Typography utilities */
 .heading {
   font-family: var(--font-display), ui-serif, Georgia, serif;
   letter-spacing: -0.02em;
 }
-.subtle { color: var(--muted); }
+.subtle {
+  color: var(--muted);
+}
 
 /* Accent underline */
-.underline-accent { background-image: linear-gradient(90deg, var(--brand), var(--accent)); background-size: 100% 2px; background-repeat: no-repeat; background-position: 0 100%; }
+.underline-accent {
+  background-image: linear-gradient(90deg, var(--brand), var(--accent));
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+}
 
 /* Animated gradient text */
 @keyframes shimmer {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 100% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 .text-shimmer {
-  background-image: linear-gradient(90deg, var(--brand), var(--accent), var(--brand));
+  background-image: linear-gradient(
+    90deg,
+    var(--brand),
+    var(--accent),
+    var(--brand)
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -130,9 +161,9 @@ body {
 /* Soft glowing text utility for elegant headings */
 .text-glow-soft {
   text-shadow:
-    0 0 6px rgba(223, 208, 184, 0.35),
-    0 0 12px rgba(148, 137, 121, 0.25),
-    0 0 24px rgba(223, 208, 184, 0.25);
+    0 0 6px rgba(224, 224, 224, 0.35),
+    0 0 12px rgba(136, 136, 136, 0.25),
+    0 0 24px rgba(224, 224, 224, 0.25);
 }
 
 /* Background pan effect for gradient text (hover) */
@@ -151,9 +182,19 @@ body {
   overflow: hidden;
   padding-block: 0.5rem;
   /* soft edge fading */
-  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 8%,
+    black 92%,
+    transparent
+  );
 }
-.logo-shelf { position: relative; width: 100%; height: 56px; }
+.logo-shelf {
+  position: relative;
+  width: 100%;
+  height: 56px;
+}
 .logo-track {
   position: absolute;
   top: 0;
@@ -165,9 +206,17 @@ body {
   white-space: nowrap;
   will-change: transform;
 }
-.track-a { animation: scroll-left 70s linear infinite; }
-.track-b { transform: translateX(calc(100% + var(--gap))); animation: scroll-left-2 70s linear infinite; }
-.logo-loop:hover .track-a, .logo-loop:hover .track-b { animation-play-state: paused; }
+.track-a {
+  animation: scroll-left 70s linear infinite;
+}
+.track-b {
+  transform: translateX(calc(100% + var(--gap)));
+  animation: scroll-left-2 70s linear infinite;
+}
+.logo-loop:hover .track-a,
+.logo-loop:hover .track-b {
+  animation-play-state: paused;
+}
 .logo-item {
   display: inline-flex;
   align-items: center;
@@ -177,17 +226,28 @@ body {
   border-radius: var(--radius-md);
   background: color-mix(in oklab, var(--card) 88%, black 12%);
   border: 1px solid var(--border);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
-.logo-item .icon { color: var(--foreground); opacity: 0.9; }
+.logo-item .icon {
+  color: var(--foreground);
+  opacity: 0.9;
+}
 
 @keyframes scroll-left {
-  from { transform: translateX(0); }
-  to { transform: translateX(calc(-100% - var(--gap))); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
 }
 @keyframes scroll-left-2 {
-  from { transform: translateX(calc(100% + var(--gap))); }
-  to { transform: translateX(0); }
+  from {
+    transform: translateX(calc(100% + var(--gap)));
+  }
+  to {
+    transform: translateX(0);
+  }
 }
 
 /* Truck Button (global namespaced styles) */
@@ -197,20 +257,20 @@ body {
   --tick: var(--brand);
   --base: var(--border);
   --wheel: var(--border);
-  --wheel-inner: #646B8C;
+  --wheel-inner: #646b8c;
   --wheel-dot: #fff;
-  --back: #6D58FF;
-  --back-inner: #362A89;
-  --back-inner-shadow: #2D246B;
-  --front: #A6ACCD;
-  --front-shadow: #535A79;
-  --front-light: #FFF8B1;
-  --window: #2B3044;
+  --back: #6d58ff;
+  --back-inner: #362a89;
+  --back-inner-shadow: #2d246b;
+  --front: #a6accd;
+  --front-shadow: #535a79;
+  --front-light: #fff8b1;
+  --window: #2b3044;
   --window-shadow: #404660;
-  --street: #646B8C;
+  --street: #646b8c;
   --street-fill: #404660;
-  --box: #DCB97A;
-  --box-shadow: #B89B66;
+  --box: #dcb97a;
+  --box-shadow: #b89b66;
   --rx: 0deg;
   --br: 15px;
   --br-d: 0s;
@@ -234,13 +294,15 @@ body {
   background: var(--background);
   border-radius: var(--br);
   transform: rotateX(var(--rx)) translateZ(0);
-  transition: transform 0.5s, border-radius 0.3s linear var(--br-d);
+  transition:
+    transform 0.5s,
+    border-radius 0.3s linear var(--br-d);
   transform-style: preserve-3d;
 }
 
 .truck-button::before,
 .truck-button::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -266,7 +328,9 @@ body {
   transition: opacity 0.3s;
 }
 
-.truck-button .default { opacity: 1; }
+.truck-button .default {
+  opacity: 1;
+}
 .truck-button .success {
   opacity: 0;
   position: absolute;
@@ -291,11 +355,24 @@ body {
   transition: stroke-dashoffset 0.4s ease 0.45s;
 }
 
-.truck-button.animation { --rx: -90deg; --br: 0; }
-.truck-button.animation .default { opacity: 0; }
-.truck-button.animation.done { --rx: 0deg; --br: 15px; --br-d: 0.2s; }
-.truck-button.animation.done .success { opacity: 1; }
-.truck-button.animation.done .success svg { stroke-dashoffset: 0; }
+.truck-button.animation {
+  --rx: -90deg;
+  --br: 0;
+}
+.truck-button.animation .default {
+  opacity: 0;
+}
+.truck-button.animation.done {
+  --rx: 0deg;
+  --br: 15px;
+  --br-d: 0.2s;
+}
+.truck-button.animation.done .success {
+  opacity: 1;
+}
+.truck-button.animation.done .success svg {
+  stroke-dashoffset: 0;
+}
 
 .truck-button .truck {
   position: absolute;
@@ -307,7 +384,7 @@ body {
 
 .truck-button .truck::before,
 .truck-button .truck::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -6px;
   left: 18px;
@@ -315,12 +392,16 @@ body {
   height: 10px;
   border-radius: 50%;
   z-index: 2;
-  box-shadow: inset 0 0 0 2px var(--wheel), inset 0 0 0 4px var(--wheel-inner);
+  box-shadow:
+    inset 0 0 0 2px var(--wheel),
+    inset 0 0 0 4px var(--wheel-inner);
   background: var(--wheel-dot);
   transform: translateY(calc(var(--truck-y) * -1px));
 }
 
-.truck-button .truck::after { left: 54px; }
+.truck-button .truck::after {
+  left: 54px;
+}
 
 .truck-button .wheel,
 .truck-button .wheel::before {
@@ -334,7 +415,11 @@ body {
   transform: translateY(calc(var(--truck-y) * -1px));
 }
 
-.truck-button .wheel::before { left: 35px; bottom: 0; content: ''; }
+.truck-button .wheel::before {
+  left: 35px;
+  bottom: 0;
+  content: "";
+}
 
 .truck-button .back {
   position: absolute;
@@ -344,11 +429,17 @@ body {
   width: 47px;
   height: 28px;
   border-radius: 1px 1px 0 0;
-  background: linear-gradient(68deg, var(--back-inner) 0%, var(--back-inner) 22%, var(--back-inner-shadow) 22.1%, var(--back-inner-shadow) 100%);
+  background: linear-gradient(
+    68deg,
+    var(--back-inner) 0%,
+    var(--back-inner) 22%,
+    var(--back-inner-shadow) 22.1%,
+    var(--back-inner-shadow) 100%
+  );
 }
 
 .truck-button .back::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 11px;
   top: 0;
@@ -360,7 +451,7 @@ body {
 }
 
 .truck-button .back::after {
-  content: '';
+  content: "";
   position: absolute;
   border-radius: 1px;
   width: 73px;
@@ -377,22 +468,34 @@ body {
   height: 22px;
   width: 24px;
   clip-path: polygon(55% 0, 72% 44%, 100% 58%, 100% 100%, 0 100%, 0 0);
-  background: linear-gradient(84deg, var(--front-shadow) 0%, var(--front-shadow) 10%, var(--front) 12%, var(--front) 100%);
+  background: linear-gradient(
+    84deg,
+    var(--front-shadow) 0%,
+    var(--front-shadow) 10%,
+    var(--front) 12%,
+    var(--front) 100%
+  );
 }
 
 .truck-button .front::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 7px;
   height: 8px;
   left: 7px;
   top: 2px;
   clip-path: polygon(0 0, 60% 0%, 100% 100%, 0% 100%);
-  background: linear-gradient(59deg, var(--window) 0%, var(--window) 57%, var(--window-shadow) 55%, var(--window-shadow) 100%);
+  background: linear-gradient(
+    59deg,
+    var(--window) 0%,
+    var(--window) 57%,
+    var(--window-shadow) 55%,
+    var(--window-shadow) 100%
+  );
 }
 
 .truck-button .front::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 3px;
   height: 2px;
@@ -412,14 +515,23 @@ body {
   overflow: hidden;
   transform: translate(-24px, -6px) scale(0.5);
   opacity: 0;
-  background: linear-gradient(68deg, var(--box) 0%, var(--box) 50%, var(--box-shadow) 50.2%, var(--box-shadow) 100%);
+  background: linear-gradient(
+    68deg,
+    var(--box) 0%,
+    var(--box) 50%,
+    var(--box-shadow) 50.2%,
+    var(--box-shadow) 100%
+  );
   background-size: 250% 100%;
   background-position-x: calc(var(--bx) * 1%);
-  transition: transform 0.4s, opacity 0.3s, background-position-x 0.18s;
+  transition:
+    transform 0.4s,
+    opacity 0.3s,
+    background-position-x 0.18s;
 }
 
 .truck-button .box::before {
-  content: '';
+  content: "";
   position: absolute;
   background: rgba(255, 255, 255, 0.2);
   left: 0;
@@ -429,7 +541,7 @@ body {
 }
 
 .truck-button .box::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 6px;
   left: 100%;

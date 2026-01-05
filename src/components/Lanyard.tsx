@@ -44,6 +44,15 @@ export default function Lanyard({
     <div className="relative z-0 h-full w-full">
       <Canvas
         camera={{ position, fov }}
+        onCreated={({ gl }) => {
+          const v =
+            typeof window !== "undefined"
+              ? getComputedStyle(document.documentElement)
+                  .getPropertyValue("--background")
+                  .trim()
+              : "";
+          gl.setClearColor(new THREE.Color(v || "#121212"));
+        }}
         gl={{
           antialias: true,
           alpha: false,
@@ -53,7 +62,6 @@ export default function Lanyard({
         }}
         dpr={[1, 2]}
       >
-        <color attach="background" args={["#222831"]} />
         <ambientLight intensity={Math.PI} />
         <Suspense fallback={null}>
           <Physics gravity={gravity} timeStep={1 / 60}>
