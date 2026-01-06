@@ -23,8 +23,8 @@ const robotoFlex = Roboto_Flex({
 });
 
 export const metadata: Metadata = {
-  title: "Portfolio | Dark Elegance",
-  description: "Personal portfolio with elegant dark theme and GSAP animations",
+  title: "Mochammad Faiz Adli",
+  description: "Personal portfolio of Mochammad Faiz Adli",
 };
 
 export default function RootLayout({
@@ -34,12 +34,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} ${robotoFlex.variable} antialiased bg-background text-foreground`}>
-        <div className="min-h-dvh flex flex-col">
+      <body
+        className={`${inter.variable} ${playfair.variable} ${robotoFlex.variable} bg-background text-foreground antialiased`}
+      >
+        <div className="flex min-h-dvh flex-col">
           <NavBar />
-          <main className="flex-1 pt-20">
-            {children}
-          </main>
+          <main className="flex-1 pt-20">{children}</main>
           <Footer />
         </div>
       </body>
