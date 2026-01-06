@@ -74,7 +74,7 @@ export default function ContactPage() {
 
   return (
     <section className="container">
-      <div className="bg-background px-4 pt-10 pb-10 sm:px-6 lg:px-8">
+      <div className="bg-background px-4 pb-10 sm:px-6 lg:px-8">
         <div className="mx-auto w-full max-w-2xl">
           <h2 className="text-foreground mb-3 text-3xl font-bold sm:text-4xl">
             Contact
