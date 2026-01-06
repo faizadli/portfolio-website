@@ -8,7 +8,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import VariableProximity from "@/components/VariableProximity";
-import InfiniteLogoLoop from "@/components/InfiniteLogoLoop";
+import InfiniteLogoLoop, { DEFAULT_LOGOS } from "@/components/InfiniteLogoLoop";
 import { gsap } from "@/lib/gsap";
 import { ExternalLink, Tags } from "lucide-react";
 import { Link } from "lucide-react";
@@ -52,6 +52,9 @@ export default function Home() {
   const ClampedDesc = ({ text }: { text: string }) => {
     return <p className="text-foreground/80 mt-2 truncate text-sm">{text}</p>;
   };
+  const projectCount = projectsData.length;
+  const certificateCount = certificatesData.length;
+  const techCount = DEFAULT_LOGOS.length;
 
   useEffect(() => {
     const el = statsRef.current;
@@ -159,10 +162,10 @@ export default function Home() {
           className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4"
         >
           {[
-            { label: "Projects", value: 12, suffix: "+" },
+            { label: "Projects", value: projectCount, suffix: "" },
             { label: "Years", value: 4, suffix: "+" },
-            { label: "Tech Stack", value: 18, suffix: "" },
-            { label: "Certificates", value: 5, suffix: "" },
+            { label: "Tech Stack", value: techCount, suffix: "" },
+            { label: "Certificates", value: certificateCount, suffix: "" },
           ].map((s) => (
             <div
               key={s.label}

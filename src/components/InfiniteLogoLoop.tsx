@@ -27,12 +27,15 @@ import {
   SiMysql,
   SiJquery,
   SiArduino,
-  SiSwift 
+  SiSwift,
 } from "react-icons/si";
 
-type TechLogo = { name: string; Icon: React.ComponentType<{ size?: number; className?: string }> };
+type TechLogo = {
+  name: string;
+  Icon: React.ComponentType<{ size?: number; className?: string }>;
+};
 
-const DEFAULT_LOGOS: TechLogo[] = [
+export const DEFAULT_LOGOS: TechLogo[] = [
   { name: "Next.js", Icon: SiNextdotjs },
   { name: "React", Icon: SiReact },
   { name: "TypeScript", Icon: SiTypescript },
@@ -64,11 +67,16 @@ const DEFAULT_LOGOS: TechLogo[] = [
 
 // DEFAULT_LOGOS now sourced from shared data
 
-export default function InfiniteLogoLoop({ logos = DEFAULT_LOGOS }: { logos?: TechLogo[] }) {
+export default function InfiniteLogoLoop({
+  logos = DEFAULT_LOGOS,
+}: {
+  logos?: TechLogo[];
+}) {
   // Per track repeat to ensure width > container, preventing visible gap
   const LOOP_MULTIPLIER = 3;
-  const trackItems: TechLogo[] = Array.from({ length: LOOP_MULTIPLIER })
-    .flatMap(() => logos);
+  const trackItems: TechLogo[] = Array.from({
+    length: LOOP_MULTIPLIER,
+  }).flatMap(() => logos);
 
   return (
     <div className="logo-loop group">
@@ -76,7 +84,12 @@ export default function InfiniteLogoLoop({ logos = DEFAULT_LOGOS }: { logos?: Te
         {/* Track A */}
         <div className="logo-track track-a">
           {trackItems.map(({ name, Icon }, idx) => (
-            <div key={`a-${name}-${idx}`} className="logo-item" title={name} aria-label={name}>
+            <div
+              key={`a-${name}-${idx}`}
+              className="logo-item"
+              title={name}
+              aria-label={name}
+            >
               <Icon size={26} className="icon" />
               <span className="sr-only">{name}</span>
             </div>
@@ -85,13 +98,18 @@ export default function InfiniteLogoLoop({ logos = DEFAULT_LOGOS }: { logos?: Te
         {/* Track B (offset) */}
         <div className="logo-track track-b">
           {trackItems.map(({ name, Icon }, idx) => (
-            <div key={`b-${name}-${idx}`} className="logo-item" title={name} aria-label={name}>
+            <div
+              key={`b-${name}-${idx}`}
+              className="logo-item"
+              title={name}
+              aria-label={name}
+            >
               <Icon size={26} className="icon" />
               <span className="sr-only">{name}</span>
             </div>
           ))}
         </div>
-    </div>
+      </div>
     </div>
   );
 }
