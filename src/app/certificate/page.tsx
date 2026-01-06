@@ -59,10 +59,10 @@ function CertificateContent() {
           mode="words"
         />
       </Reveal>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((c) => (
           <div key={c.name}>
-            <div className="group bg-card border-border hover:bg-brand/10 overflow-hidden rounded-xl border transition-colors hover:border-white/20">
+            <div className="group bg-card border-border hover:bg-brand/10 w-full max-w-full overflow-hidden rounded-xl border transition-colors hover:border-white/20">
               <div className="relative h-36 w-full">
                 <Image
                   src={c.image}
