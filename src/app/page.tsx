@@ -80,7 +80,7 @@ export default function Home() {
   }, []);
 
   return (
-    <section className="container pb-24 md:pb-32">
+    <section className="container">
       <div className="grid gap-10 md:grid-cols-2 md:items-center">
         <div>
           <div

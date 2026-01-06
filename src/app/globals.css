@@ -319,7 +319,7 @@ body {
   cursor: pointer;
   text-align: center;
   position: relative;
-  border: none;
+  border: 1px solid var(--border);
   outline: none;
   color: var(--color);
   background: var(--background);

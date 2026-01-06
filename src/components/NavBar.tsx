@@ -15,9 +15,9 @@ const menuItems = [
 ];
 
 const socialItems = [
-  { label: "GitHub", link: "https://github.com/yourusername" },
-  { label: "LinkedIn", link: "https://linkedin.com/in/yourusername" },
-  { label: "Twitter", link: "https://twitter.com/yourusername" },
+  { label: "GitHub", link: "https://github.com/faizadli" },
+  { label: "LinkedIn", link: "https://www.linkedin.com/in/faiz-adli/" },
+  { label: "Instagram", link: "https://www.instagram.com/faizadli.pflo/" },
 ];
 
 export default function NavBar() {

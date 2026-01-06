@@ -73,7 +73,7 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="bg-background min-h-screen px-4 pt-10 pb-6 sm:px-6 lg:px-8">
+    <div className="bg-background px-4 pt-10 pb-10 sm:px-6 lg:px-8">
       <div className="mx-auto w-full max-w-2xl">
         <h2 className="text-foreground mb-3 text-3xl font-bold sm:text-4xl">
           Contact
@@ -99,7 +99,8 @@ export default function ContactPage() {
 
         <div className="mb-6 flex flex-wrap items-center gap-3">
           <a
-            href="/assets/resume.pdf"
+            href="/assets/cv/Resume Mochammad Faiz Adli.pdf"
+            download
             className="border-brand/30 bg-brand/15 text-foreground hover:bg-brand/25 rounded-full border px-4 py-2 text-sm"
           >
             Download CV
@@ -218,7 +219,7 @@ export default function ContactPage() {
             onReset={() => setStatus({ type: "", message: "" })}
             labelDefault="Send Message"
             labelSuccess="Message Sent"
-            className="mt-8 w-full sm:mt-10 sm:w-auto"
+            className="focus:ring-brand mt-8 w-full [--background:var(--brand)] [--color:black] [--tick:black] focus:ring-2 focus:outline-none sm:mt-10 sm:w-auto"
           />
         </form>
         {/* Toasts */}
