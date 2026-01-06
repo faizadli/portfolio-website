@@ -5,7 +5,7 @@ import ExperienceTimeline from "@/components/ExperienceTimeline";
 
 export default function AboutPage() {
   return (
-    <section className="container space-y-16 py-16">
+    <section className="container">
       {/* Section 1: Biodata Perkenalan */}
       <BioIntro />
 

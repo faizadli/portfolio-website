@@ -43,7 +43,7 @@ function ProjectsContent() {
   };
 
   return (
-    <section className="container py-16">
+    <section className="container">
       <Reveal y={28}>
         <TextSplit
           as="h2"

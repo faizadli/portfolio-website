@@ -129,7 +129,7 @@ function CertificateContent() {
   };
 
   return (
-    <section className="container mx-auto py-16">
+    <section className="container">
       <Reveal y={28}>
         <TextSplit
           as="h2"
