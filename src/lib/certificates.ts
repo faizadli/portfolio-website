@@ -136,7 +136,7 @@ export const certificatesData: CertificateItem[] = [
   },
   {
     name: "Fundamental SQL Using SELECT Statement",
-    issuer: "Sololearn",
+    issuer: "DQLab",
     year: 2021,
     image:
       "/assets/certificates/Fundamental%20SQL%20Using%20SELECT%20Statement%20-%20DQLab.png",
