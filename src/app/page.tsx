@@ -13,6 +13,8 @@ import { gsap } from "@/lib/gsap";
 import { ExternalLink, Tags } from "lucide-react";
 import { Link } from "lucide-react";
 import ActionPill from "@/components/ActionPill";
+import DetailModal from "@/components/DetailModal";
+import { certificatesData } from "@/lib/certificates";
 
 // Dynamic import untuk Lanyard agar tidak di-render di server-side
 const Lanyard = dynamic(() => import("@/components/Lanyard"), {
@@ -24,6 +26,21 @@ export default function Home() {
   const statsRef = useRef<HTMLDivElement>(null);
   const [pageSize, setPageSize] = useState(3);
   const [homeProjectsPage, setHomeProjectsPage] = useState(1);
+  const [openProj, setOpenProj] = useState(false);
+  const [selectedProj, setSelectedProj] = useState<{
+    title: string;
+    image: string;
+    desc: string;
+    tags: string[];
+  } | null>(null);
+  const [openCert, setOpenCert] = useState(false);
+  const [selectedCert, setSelectedCert] = useState<{
+    name: string;
+    issuer: string;
+    year: number;
+    image: string;
+    description?: string;
+  } | null>(null);
   const totalProjects = projectsData.length;
   const totalProjectPages = Math.max(1, Math.ceil(totalProjects / pageSize));
   const displayPage = Math.min(
@@ -238,6 +255,22 @@ export default function Home() {
                               </span>
                             ))}
                         </div>
+                        <div className="mt-3">
+                          <button
+                            onClick={() => {
+                              setSelectedProj({
+                                title: p.title,
+                                image: p.image,
+                                desc: p.desc,
+                                tags: p.tags,
+                              });
+                              setOpenProj(true);
+                            }}
+                            className="rounded-full border border-white/10 px-3 py-1.5 text-xs hover:border-white/20"
+                          >
+                            View Details
+                          </button>
+                        </div>
                       </div>
                     </article>
                   </Reveal>
@@ -297,56 +330,15 @@ export default function Home() {
         </Reveal>
         <Reveal y={24} delay={0.1}>
           <div className="mt-6 md:mt-8">
-            {(() => {
-              const certificates = [
-                {
-                  name: "Front-End Developer",
-                  issuer: "Dicoding",
-                  year: 2023,
-                  image:
-                    "https://placehold.co/600x400/png?text=Front-End+Developer",
-                  link: "#",
-                },
-                {
-                  name: "React Advanced",
-                  issuer: "Udemy",
-                  year: 2024,
-                  image: "https://placehold.co/600x400/png?text=React+Advanced",
-                  link: "#",
-                },
-                {
-                  name: "Web Accessibility",
-                  issuer: "Coursera",
-                  year: 2024,
-                  image:
-                    "https://placehold.co/600x400/png?text=Web+Accessibility",
-                  link: "#",
-                },
-                {
-                  name: "UI Design Basics",
-                  issuer: "Coursera",
-                  year: 2023,
-                  image:
-                    "https://placehold.co/600x400/png?text=UI+Design+Basics",
-                  link: "#",
-                },
-                {
-                  name: "Performance Optimization",
-                  issuer: "Udacity",
-                  year: 2024,
-                  image:
-                    "https://placehold.co/600x400/png?text=Performance+Optimization",
-                  link: "#",
-                },
-              ];
-              return (
-                <ThreeDSlider
-                  items={certificates}
-                  viewAllHref="/certificate"
-                  viewAllLabel="View All"
-                />
-              );
-            })()}
+            <ThreeDSlider
+              items={certificatesData}
+              viewAllHref="/certificate"
+              viewAllLabel="View All"
+              onView={(item) => {
+                setSelectedCert(item);
+                setOpenCert(true);
+              }}
+            />
           </div>
         </Reveal>
       </div>
@@ -387,6 +379,26 @@ export default function Home() {
           </Reveal>
         </div>
       </section>
+      <DetailModal
+        open={openCert}
+        onClose={() => setOpenCert(false)}
+        image={selectedCert?.image}
+        title={selectedCert?.name}
+        subtitle={
+          selectedCert
+            ? `${selectedCert.issuer} - ${selectedCert.year}`
+            : undefined
+        }
+        description={selectedCert?.description}
+      />
+      <DetailModal
+        open={openProj}
+        onClose={() => setOpenProj(false)}
+        image={selectedProj?.image}
+        title={selectedProj?.title}
+        tags={selectedProj?.tags}
+        description={selectedProj?.desc}
+      />
     </section>
   );
 }

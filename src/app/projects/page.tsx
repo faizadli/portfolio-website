@@ -6,9 +6,17 @@ import { ExternalLink, Tags } from "lucide-react";
 import { projectsData } from "@/lib/projects";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useLayoutEffect } from "react";
+import DetailModal from "@/components/DetailModal";
 
 function ProjectsContent() {
   const [pageSize, setPageSize] = useState(10);
+  const [openProj, setOpenProj] = useState(false);
+  const [selectedProj, setSelectedProj] = useState<{
+    title: string;
+    image: string;
+    desc: string;
+    tags: string[];
+  } | null>(null);
 
   useLayoutEffect(() => {
     const updateSize = () => {
@@ -98,6 +106,22 @@ function ProjectsContent() {
                       </span>
                     ))}
                 </div>
+                <div className="mt-3">
+                  <button
+                    onClick={() => {
+                      setSelectedProj({
+                        title: p.title,
+                        image: p.image,
+                        desc: p.desc,
+                        tags: p.tags,
+                      });
+                      setOpenProj(true);
+                    }}
+                    className="rounded-full border border-white/10 px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5 hover:border-white/20"
+                  >
+                    View Details
+                  </button>
+                </div>
               </div>
             </article>
           </Reveal>
@@ -143,6 +167,14 @@ function ProjectsContent() {
           </button>
         ))}
       </div>
+      <DetailModal
+        open={openProj}
+        onClose={() => setOpenProj(false)}
+        image={selectedProj?.image}
+        title={selectedProj?.title}
+        tags={selectedProj?.tags}
+        description={selectedProj?.desc}
+      />
     </section>
   );
 }

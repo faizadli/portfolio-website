@@ -9,17 +9,20 @@ type Item = {
   issuer: string;
   year: number;
   image: string;
-  link: string;
+  link?: string;
+  description?: string;
 };
 
 export default function ThreeDSlider({
   items,
   viewAllHref,
   viewAllLabel,
+  onView,
 }: {
   items: Item[];
   viewAllHref?: string;
   viewAllLabel?: string;
+  onView?: (item: Item) => void;
 }) {
   const [list, setList] = useState(items);
   const GAP = 24;
@@ -142,16 +145,28 @@ export default function ThreeDSlider({
                 />
               </div>
               <div className="p-5">
-                <h4 className="text-lg font-semibold">{c.name}</h4>
+                <h4 className="truncate text-lg font-semibold">{c.name}</h4>
                 <p className="subtle mt-1 text-sm">
                   {c.issuer} · {c.year}
                 </p>
-                <a
-                  href={c.link}
-                  className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 px-3.5 py-2 text-xs hover:border-white/20"
-                >
-                  <Link className="size-3" /> View Certificate
-                </a>
+                {onView ? (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onView(c);
+                    }}
+                    className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 px-3.5 py-2 text-xs hover:border-white/20"
+                  >
+                    <Link className="size-3" /> View Certificate
+                  </button>
+                ) : (
+                  <a
+                    href={c.link ?? "#"}
+                    className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/10 px-3.5 py-2 text-xs hover:border-white/20"
+                  >
+                    <Link className="size-3" /> View Certificate
+                  </a>
+                )}
               </div>
             </li>
           );

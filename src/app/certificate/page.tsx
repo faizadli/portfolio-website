@@ -1,100 +1,20 @@
 "use client";
 import Reveal from "@/components/Reveal";
 import TextSplit from "@/components/TextSplit";
-import Image from "next/image";
 import { Link } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Suspense, useState, useLayoutEffect } from "react";
+import DetailModal from "@/components/DetailModal";
+import Image from "next/image";
+import { certificatesData } from "@/lib/certificates";
+import type { CertificateItem } from "@/lib/certificates";
 
-const certificates = [
-  {
-    name: "Front-End Developer",
-    issuer: "Dicoding",
-    year: 2023,
-    image: "https://placehold.co/600x400/png?text=Front-End+Developer",
-    link: "#",
-  },
-  {
-    name: "React Advanced",
-    issuer: "Udemy",
-    year: 2024,
-    image: "https://placehold.co/600x400/png?text=React+Advanced",
-    link: "#",
-  },
-  {
-    name: "Web Accessibility",
-    issuer: "Coursera",
-    year: 2024,
-    image: "https://placehold.co/600x400/png?text=Web+Accessibility",
-    link: "#",
-  },
-  {
-    name: "UI Design Basics",
-    issuer: "Coursera",
-    year: 2023,
-    image: "https://placehold.co/600x400/png?text=UI+Design+Basics",
-    link: "#",
-  },
-  {
-    name: "Performance Optimization",
-    issuer: "Udacity",
-    year: 2024,
-    image: "https://placehold.co/600x400/png?text=Performance+Optimization",
-    link: "#",
-  },
-  {
-    name: "JavaScript Fundamentals",
-    issuer: "freeCodeCamp",
-    year: 2022,
-    image: "https://placehold.co/600x400/png?text=JavaScript+Fundamentals",
-    link: "#",
-  },
-  {
-    name: "TypeScript Essentials",
-    issuer: "Udemy",
-    year: 2023,
-    image: "https://placehold.co/600x400/png?text=TypeScript+Essentials",
-    link: "#",
-  },
-  {
-    name: "React Testing",
-    issuer: "Testing Library",
-    year: 2024,
-    image: "https://placehold.co/600x400/png?text=React+Testing",
-    link: "#",
-  },
-  {
-    name: "Node.js Basics",
-    issuer: "Coursera",
-    year: 2022,
-    image: "https://placehold.co/600x400/png?text=Node.js+Basics",
-    link: "#",
-  },
-  {
-    name: "CSS Mastery",
-    issuer: "Udacity",
-    year: 2023,
-    image: "https://placehold.co/600x400/png?text=CSS+Mastery",
-    link: "#",
-  },
-  {
-    name: "Accessibility Advanced",
-    issuer: "Deque",
-    year: 2024,
-    image: "https://placehold.co/600x400/png?text=Accessibility+Advanced",
-    link: "#",
-  },
-  {
-    name: "Performance Web",
-    issuer: "Google",
-    year: 2024,
-    image: "https://placehold.co/600x400/png?text=Performance+Web",
-    link: "#",
-  },
-];
+const certificates = certificatesData;
 
 function CertificateContent() {
   const [pageSize, setPageSize] = useState(10);
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<CertificateItem | null>(null);
 
   useLayoutEffect(() => {
     const updateSize = () => {
@@ -154,17 +74,20 @@ function CertificateContent() {
                 <div className="bg-brand/20 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
               <div className="p-6">
-                <h3 className="text-lg font-semibold">{c.name}</h3>
+                <h3 className="truncate text-lg font-semibold">{c.name}</h3>
                 <p className="subtle mt-1 text-sm">
                   {c.issuer} · {c.year}
                 </p>
                 <div className="mt-4">
-                  <a
-                    href={c.link}
+                  <button
+                    onClick={() => {
+                      setSelected(c);
+                      setOpen(true);
+                    }}
                     className="border-accent/30 bg-accent/15 text-foreground hover:bg-accent/25 inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs transition-transform hover:-translate-y-0.5"
                   >
                     <Link className="size-3" /> View Certificate
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -210,6 +133,16 @@ function CertificateContent() {
           </button>
         ))}
       </div>
+      <DetailModal
+        open={open}
+        onClose={() => setOpen(false)}
+        image={selected?.image}
+        title={selected?.name}
+        subtitle={
+          selected ? `${selected.issuer} - ${selected.year}` : undefined
+        }
+        description={selected?.description ?? ""}
+      />
     </section>
   );
 }
