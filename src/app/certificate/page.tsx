@@ -4,7 +4,7 @@ import TextSplit from "@/components/TextSplit";
 import Image from "next/image";
 import { Link } from "lucide-react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useState, useLayoutEffect } from "react";
 
 const certificates = [
   {
@@ -94,17 +94,33 @@ const certificates = [
 ];
 
 function CertificateContent() {
-  const PAGE_SIZE = 9;
+  const [pageSize, setPageSize] = useState(10);
+
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      const w = window.innerWidth;
+      // Tablet range: >= 640px (sm) and < 1024px (lg)
+      if (w >= 640 && w < 1024) {
+        setPageSize(10);
+      } else {
+        setPageSize(9);
+      }
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const raw = searchParams.get("page");
   const parsed = raw ? Number(raw) : 1;
   const page = Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
   const totalItems = certificates.length;
-  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const clampedPage = Math.min(page, totalPages);
-  const startIndex = (clampedPage - 1) * PAGE_SIZE;
-  const visible = certificates.slice(startIndex, startIndex + PAGE_SIZE);
+  const startIndex = (clampedPage - 1) * pageSize;
+  const visible = certificates.slice(startIndex, startIndex + pageSize);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const setPage = (p: number) => {

@@ -221,25 +221,6 @@ export default function ContactPage() {
             className="mt-8 w-full sm:mt-10 sm:w-auto"
           />
         </form>
-        <div className="mt-8 space-y-3">
-          <details className="bg-card border-border rounded-xl border p-4">
-            <summary className="cursor-pointer font-semibold">
-              What information should I include?
-            </summary>
-            <p className="text-foreground/80 mt-2 text-sm">
-              Describe objectives, timeline, and key features. Include
-              references if available.
-            </p>
-          </details>
-          <details className="bg-card border-border rounded-xl border p-4">
-            <summary className="cursor-pointer font-semibold">
-              Are online meetings available?
-            </summary>
-            <p className="text-foreground/80 mt-2 text-sm">
-              Yes, via Google Meet/Zoom based on the agreed schedule.
-            </p>
-          </details>
-        </div>
         {/* Toasts */}
         <div className="fixed top-4 right-4 z-50 space-y-3">
           {toasts.map((t) => (

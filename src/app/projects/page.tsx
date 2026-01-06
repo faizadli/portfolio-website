@@ -5,20 +5,36 @@ import Image from "next/image";
 import { ExternalLink, Tags } from "lucide-react";
 import { projectsData } from "@/lib/projects";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useState, useLayoutEffect } from "react";
 
 function ProjectsContent() {
-  const PAGE_SIZE = 9;
+  const [pageSize, setPageSize] = useState(10);
+
+  useLayoutEffect(() => {
+    const updateSize = () => {
+      const w = window.innerWidth;
+      // Tablet range: >= 640px (sm) and < 1024px (lg)
+      if (w >= 640 && w < 1024) {
+        setPageSize(10);
+      } else {
+        setPageSize(9);
+      }
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+    return () => window.removeEventListener("resize", updateSize);
+  }, []);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const raw = searchParams.get("page");
   const parsed = raw ? Number(raw) : 1;
   const page = Number.isFinite(parsed) && parsed > 0 ? parsed : 1;
   const totalItems = projectsData.length;
-  const totalPages = Math.max(1, Math.ceil(totalItems / PAGE_SIZE));
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
   const clampedPage = Math.min(page, totalPages);
-  const startIndex = (clampedPage - 1) * PAGE_SIZE;
-  const visible = projectsData.slice(startIndex, startIndex + PAGE_SIZE);
+  const startIndex = (clampedPage - 1) * pageSize;
+  const visible = projectsData.slice(startIndex, startIndex + pageSize);
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   const setPage = (p: number) => {
@@ -37,39 +53,24 @@ function ProjectsContent() {
           mode="words"
         />
       </Reveal>
-      <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {visible.map((p, i) => (
           <Reveal key={p.title} y={24} delay={i * 0.08}>
-            <article className="group border-border bg-card hover:bg-accent/10 overflow-hidden rounded-xl border transition-colors hover:border-white/20">
-              <div className="relative h-40 w-full">
+            <article className="group border-border bg-card flex h-full w-full max-w-full flex-col overflow-hidden rounded-xl border transition-colors">
+              <div className="relative h-36 w-full sm:h-44 md:h-52 lg:h-56">
                 <Image
                   src={p.image}
                   alt={p.title}
                   fill
-                  className="object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="object-cover"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   unoptimized
                 />
-                <div className="bg-accent/20 absolute inset-0 opacity-0 transition-opacity group-hover:opacity-100" />
               </div>
-              <div className="p-6">
+              <div className="flex flex-col px-5 pt-5 pb-3">
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <h3 className="group-hover:text-foreground text-lg font-semibold">
-                      {p.title}
-                    </h3>
-                    <p className="subtle mt-1 text-xs">{p.stack}</p>
-                    <div className="mt-2 flex flex-wrap gap-1.5">
-                      {p.stack.split(",").map((s, i) =>
-                        i < 2 ? (
-                          <span
-                            key={`${p.title}-stack-${i}`}
-                            className="bg-brand/15 border-brand/30 text-foreground rounded-full border px-2 py-0.5 text-[11px]"
-                          >
-                            {s.trim()}
-                          </span>
-                        ) : null,
-                      )}
-                    </div>
+                    <h3 className="text-lg font-semibold">{p.title}</h3>
                   </div>
                   <a
                     href={p.url}
@@ -79,19 +80,23 @@ function ProjectsContent() {
                     <ExternalLink className="size-4" />
                   </a>
                 </div>
-                <p className="text-foreground/80 mt-4 text-sm">{p.desc}</p>
-                <div className="mt-4 flex flex-wrap gap-2">
+                <p className="text-foreground/80 mt-2 truncate text-sm">
+                  {p.desc}
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
                   <span className="border-accent/30 bg-accent/15 inline-flex items-center gap-1 rounded-full border px-2 py-1 text-xs">
                     <Tags className="size-3" /> Tags
                   </span>
-                  {p.tags.map((t) => (
-                    <span
-                      key={t}
-                      className="border-accent/30 bg-accent/15 text-foreground rounded-full border px-2 py-1 text-xs"
-                    >
-                      {t}
-                    </span>
-                  ))}
+                  {p.tags
+                    .filter((t) => t !== "Next.js" && t !== "GSAP")
+                    .map((t) => (
+                      <span
+                        key={t}
+                        className="border-accent/30 bg-accent/15 text-foreground rounded-full border px-2 py-1 text-xs"
+                      >
+                        {t}
+                      </span>
+                    ))}
                 </div>
               </div>
             </article>

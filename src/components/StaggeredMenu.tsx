@@ -447,7 +447,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
               />
             ) : (
               <span className="from-brand to-accent bg-gradient-to-r bg-clip-text text-transparent">
-                FAIZ
+                MOCHAMMAD FAIZ ADLI
               </span>
             )}
           </Link>
